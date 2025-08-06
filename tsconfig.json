@@ -15,7 +15,9 @@
     "rootDirs": [".", "./.react-router/types"],
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./app/*"],
+      "@globlaTypes": ["app/types/global.ts"],
+      "@assets/*": ["./app/assets/*"],
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,

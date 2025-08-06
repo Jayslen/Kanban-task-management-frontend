@@ -3,28 +3,67 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Dark Tones */
-  --color-dark: #000112;
-  --color-dark-700: #20212C;
-  --color-dark-600: #2B2C37;
-  --color-dark-500: #3E3F4E;
-
-  /* Primary Blue-Purple Tones */
-  --color-purple-700: #635FC7;
-  --color-purple-500: #A8A4FF;
-
-  /* Gray Tones */
-  --color-gray-500: #828FA3;
-  --color-gray-200: #E4EBFA;
-  --color-gray-100: #F4F7FD;
-
-  /* Accent Red Tones */
-  --color-red-500: #EA5555;
-  --color-red-200: #FF9898;
-
-  /* Neutral */
-  --color-white: #FFFFFF;
+   --black: rgb(0 1 18);
+  --color-very-dark-grey-dark-bg: rgb(32 33 44);
+  --color-dark-grey: rgb(43 44 55);
+  --color-lines-dark: rgb(62 63 78);
+  --color-medium-grey: rgb(130 143 163);
+  --color-lines-light: rgb(228 235 250);
+  --color-light-grey-light-bg: rgb(244 247 253);
+  --color-white: rgb(255 255 255);
+  --color-main-purple: rgb(99 95 199);
+  --color-main-purple-hover: rgb(168 164 255);
+  --color-red: rgb(234 85 85);
+  --color-red-hover: rgb(255 152 152);
+  
 
   --font-plus-jakarta-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  @apply dark:bg-very-dark-grey-dark-bg bg-white
+}
+
+@layer components {
+  .heading-xl {
+    @apply text-2xl font-bold;
+  }
+
+  .heading-l {
+    @apply text-lg font-bold;
+  }
+
+  .heading-m {
+    @apply text-[15px] font-bold;
+  }
+
+  .heading-s {
+    @apply text-xs font-bold;
+  }
+
+  .typo-paragraph-medium {
+    @apply text-sm font-medium leading-6;
+  }
+
+  .typo-paragraph-bold {
+    @apply text-xs font-bold leading-3.5;
+  }
+
+  .primary-btn-l {
+    @apply w-64 h-10 rounded-3xl dark:bg-main-purple dark:hover:bg-main-purple-hover dark:text-white text-[px] font-bold transition-colors duration-200 ease-in-out;
+  }
+
+  .primary-btn-m {
+    @apply w-65 h-10 rounded-3xl dark:bg-main-purple dark:hover:bg-main-purple-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out;
+  }
+
+  .secondary-btn {
+    @apply w-64 h-10 rounded-3xl dark:bg-white dark:text-main-purple text-[13px] font-bold;
+  }
+
+  .delete-btn {
+    @apply w-64 h-10 rounded-3xl dark:bg-red dark:hover:bg-red-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out;
+  }
+
 }
 
