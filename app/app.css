@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap");
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -21,7 +20,7 @@
 }
 
 body {
-  @apply dark:bg-very-dark-grey-dark-bg bg-white
+  @apply dark:bg-very-dark-grey-dark-bg bg-white h-screen
 }
 
 @layer components {
@@ -41,11 +40,11 @@ body {
     @apply text-xs font-bold;
   }
 
-  .typo-paragraph-medium {
+  .typo-body-m {
     @apply text-sm font-medium leading-6;
   }
 
-  .typo-paragraph-bold {
+  .typo-body-b {
     @apply text-xs font-bold leading-3.5;
   }
 
