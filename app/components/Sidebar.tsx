@@ -1,24 +1,27 @@
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import LogoSvg from '@assets/logo-light.svg'
 import { BoardIcon } from '@assets/BoardIcon'
 import HideSideBarIcon from '@assets/icon-hide-sidebar.svg'
 import data from '../mockup/data.json'
-import { type Boards } from '@globlaTypes'
+import { type Board, type Boards } from '@globlaTypes'
 import { Toggle } from './Toggle'
-import { NavLink } from 'react-router'
+import { useNavigate, NavLink } from 'react-router'
 
 export function SideBar() {
-  const [boards, setBoards] = useState<Boards>()
+  const [boards, setBoards] = useState<Board[]>()
 
   useEffect(() => {
     // Simulate fetching boards from an API or data source
     const fetchBoards = async () => {
-      const boardsData = await import('../mockup/data.json')
-      setBoards(boardsData.boards as Boards)
+      const response = await fetch('../app/mockup/data.json')
+      if (!response.ok) {
+        throw new Error('Failed to fetch boards')
+      }
+      const bordsData = (await response.json()) as Boards
+      setBoards(bordsData.boards)
     }
-
     fetchBoards()
-  })
+  }, [])
 
   return (
     <aside className="w-[300px] h-screen dark:bg-dark-grey grid grid-rows-[auto_1fr_auto]">
@@ -32,7 +35,7 @@ export function SideBar() {
         <h3 className="heading-s text-medium-grey uppercase px-7">
           All boards (8)
         </h3>
-        <ul className="flex flex-col">
+        <ul className="flex flex-col ">
           {boards?.map((board) => (
             <li key={board.id}>
               <NavLink

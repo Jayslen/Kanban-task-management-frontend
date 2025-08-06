@@ -1,4 +1,6 @@
-export type Boards = Board[];
+export type Boards = {
+    boards: Board[]
+};
 
 export interface Board {
     id: string;
@@ -28,4 +30,10 @@ export enum Status {
 export interface Subtask {
     title: string;
     isCompleted: boolean;
+}
+
+export enum TaskStatusColor {
+    Todo = '#49C4E5',
+    Doing = '#8471F2',
+    Done = '#67E2AE'
 }
