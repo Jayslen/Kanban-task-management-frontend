@@ -20,7 +20,7 @@
 }
 
 body {
-  @apply dark:bg-very-dark-grey-dark-bg bg-white h-screen
+  @apply dark:bg-very-dark-grey-dark-bg bg-white h-screen;
 }
 
 @layer components {
@@ -64,5 +64,19 @@ body {
     @apply w-64 h-10 rounded-3xl dark:bg-red dark:hover:bg-red-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out;
   }
 
+  .custom-scrollbar {
+    @apply [&::-webkit-scrollbar]:w-1.5
+           [&::-webkit-scrollbar-track]:m-4
+           [&::-webkit-scrollbar-thumb]:rounded-full
+           [&::-webkit-scrollbar-thumb]:bg-gray-300
+           [&::-webkit-scrollbar-track]:rounded-full
+           [&::-webkit-scrollbar]:h-1
+           [&::-webkit-scrollbar-track]:h-2
+           [&::-webkit-scrollbar-thumb]:h-2
+           [&::-webkit-scrollbar-thumb]:w-2
+           [&::-webkit-scrollbar-track]:bg-gray-100
+           dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+           dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500;
+  }
 }
 

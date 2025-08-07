@@ -1,7 +1,10 @@
 import type { Route } from './+types/Board'
 import type { Boards } from '~/types/global'
-import { BoardTask } from '~/components/BoardTask'
+import { BoardTask } from '~/components/board/BoardTask'
+import type { Task } from '~/types/global'
 import { TaskStatusColor } from '~/types/global'
+import { useState } from 'react'
+import { TaskPopup } from '~/components/board/TaskPopup'
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const response = await fetch('../app/mockup/data.json')
@@ -35,25 +38,26 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 export default function Board({ loaderData }: Route.ComponentProps) {
+  const [taskSelected, setTaskSelected] = useState<Task | null>(null)
+
+  const updateTasks = (updatedTask: Task) => {
+    setTaskSelected(updatedTask)
+  }
+
+  const closeTaskPopup = () => {
+    setTaskSelected(null)
+  }
+
   const board = loaderData
   const columns = board?.columns
   const columnsCount = columns?.length ? columns.length + 1 : 1
   return (
     <main className="pt-16 p-6 container mx-auto font-plus-jakarta-sans overflow-auto min-h-screen">
       <section
-        className={`grid grid-cols-[repeat(${columnsCount},280px)] h-full gap-6 overflow-auto overflow-y-auto
-  [&::-webkit-scrollbar]:w-1.5
-  [&::-webkit-scrollbar-track]:m-4
-  [&::-webkit-scrollbar-thumb]:rounded-full
-  [&::-webkit-scrollbar-thumb]:bg-gray-300
-  [&::-webkit-scrollbar-track]:rounded-full
-  [&::-webkit-scrollbar]:h-1
-  [&::-webkit-scrollbar-track]:h-2
-  [&::-webkit-scrollbar-thumb]:h-2
-  [&::-webkit-scrollbar-thumb]:w-2
-  [&::-webkit-scrollbar-track]:bg-gray-100
-  dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500`}
+        style={{
+          gridTemplateColumns: `repeat(${columnsCount}, 280px)`,
+        }}
+        className="grid h-full gap-6 overflow-auto overflow-y-auto custom-scrollbar"
       >
         {columns?.map(({ name, tasks }) => {
           const color = TaskStatusColor[name as keyof typeof TaskStatusColor]
@@ -68,7 +72,7 @@ export default function Board({ loaderData }: Route.ComponentProps) {
               </header>
               <ul key={name} className="flex flex-col gap-5">
                 {tasks.map((task) => {
-                  return <BoardTask task={task} />
+                  return <BoardTask task={task} updatedTask={updateTasks} />
                 })}
               </ul>
             </div>
@@ -78,6 +82,9 @@ export default function Board({ loaderData }: Route.ComponentProps) {
           <button className="heading-l text-medium-grey">+ New Column</button>
         </div>
       </section>
+      {taskSelected && (
+        <TaskPopup task={taskSelected} onClose={closeTaskPopup} />
+      )}
     </main>
   )
 }

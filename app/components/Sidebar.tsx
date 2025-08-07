@@ -51,9 +51,7 @@ export function SideBar() {
           ))}
           <li>
             <button className="dark:text-main-purple w-[276px] h-12 heading-m px-7 flex items-center gap-4 rounded-r-full">
-              <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                <BoardIcon />
-              </svg>
+              <BoardIcon />
               <span>+ Create New Board</span>
             </button>
           </li>
