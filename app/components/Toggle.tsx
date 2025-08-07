@@ -3,7 +3,7 @@ import LightModeIcon from '../assets/icon-light-theme.svg'
 
 export function Toggle() {
   return (
-    <div className=" dark:bg-very-dark-grey-dark-bg flex items-center justify-center gap-4 p-3 rounded-md">
+    <div className=" dark:bg-very-dark-grey-dark-bg flex items-center justify-center mx-6 gap-4 p-3 rounded-md">
       <img src={LightModeIcon} alt="Light mode icon" />
       <label className="inline-flex items-center cursor-pointer">
         <input type="checkbox" className="sr-only peer" />

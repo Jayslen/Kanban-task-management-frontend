@@ -2,10 +2,9 @@ import { use, useEffect, useState } from 'react'
 import LogoSvg from '@assets/logo-light.svg'
 import { BoardIcon } from '@assets/BoardIcon'
 import HideSideBarIcon from '@assets/icon-hide-sidebar.svg'
-import data from '../mockup/data.json'
 import { type Board, type Boards } from '@globlaTypes'
 import { Toggle } from './Toggle'
-import { useNavigate, NavLink } from 'react-router'
+import { NavLink } from 'react-router'
 
 export function SideBar(prorps: { toggleSideBar: () => void }) {
   const { toggleSideBar } = prorps
@@ -42,7 +41,7 @@ export function SideBar(prorps: { toggleSideBar: () => void }) {
               <NavLink
                 to={`/board/${board.id}`}
                 className={({ isActive }) =>
-                  `dark:text-medium-grey w-[276px] h-12 heading-m flex items-center gap-4 rounded-r-full ${isActive ? 'first:bg-main-purple first:text-white' : null} px-7`
+                  `w-[276px] h-12 heading-m flex items-center px-7 gap-4 rounded-r-full transition-colors duration-300 dark:text-medium-grey dark:hover:text-main-purple dark:hover:bg-white ${isActive ? 'first:bg-main-purple first:text-white' : null}`
                 }
               >
                 <BoardIcon />
@@ -59,16 +58,14 @@ export function SideBar(prorps: { toggleSideBar: () => void }) {
         </ul>
       </nav>
 
-      <footer className="flex flex-col gap-5 p-6">
+      <footer className="flex flex-col gap-5 ">
         <Toggle />
         <button
-          className="flex gap-3 items-center cursor-pointer"
+          className="flex items-center gap-3 px-6 mb-6 h-12 rounded-r-full w-[276px] cursor-pointer transition-colors duration-300 hover:dark:bg-white hover:dark:text-main-purple"
           onClick={toggleSideBar}
         >
           <img src={HideSideBarIcon} alt="" />
-          <label htmlFor="hide-side" className="text-medium-grey heading-m">
-            Hide sidebar
-          </label>
+          <span className="text-medium-grey heading-m">Hide sidebar</span>
         </button>
       </footer>
     </aside>
