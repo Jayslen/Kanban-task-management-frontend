@@ -49,19 +49,19 @@ body {
   }
 
   .primary-btn-l {
-    @apply w-64 h-10 rounded-3xl dark:bg-main-purple dark:hover:bg-main-purple-hover dark:text-white text-[px] font-bold transition-colors duration-200 ease-in-out;
+    @apply w-64 h-10 rounded-3xl dark:bg-main-purple dark:hover:bg-main-purple-hover dark:text-white text-[px] font-bold transition-colors duration-200 ease-in-out cursor-pointer;
   }
 
   .primary-btn-m {
-    @apply w-65 h-10 rounded-3xl dark:bg-main-purple dark:hover:bg-main-purple-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out;
+    @apply w-65 h-10 rounded-3xl dark:bg-main-purple dark:hover:bg-main-purple-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out cursor-pointer;
   }
 
   .secondary-btn {
-    @apply w-64 h-10 rounded-3xl dark:bg-white dark:text-main-purple text-[13px] font-bold;
+    @apply w-64 h-10 rounded-3xl dark:bg-white dark:text-main-purple text-[13px] font-bold cursor-pointer;
   }
 
   .delete-btn {
-    @apply w-64 h-10 rounded-3xl dark:bg-red dark:hover:bg-red-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out;
+    @apply w-64 h-10 rounded-3xl dark:bg-red dark:hover:bg-red-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out cursor-pointer;
   }
 
   .custom-scrollbar {

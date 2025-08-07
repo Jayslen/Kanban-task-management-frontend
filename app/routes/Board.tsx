@@ -52,7 +52,7 @@ export default function Board({ loaderData }: Route.ComponentProps) {
   const columns = board?.columns
   const columnsCount = columns?.length ? columns.length + 1 : 1
   return (
-    <main className="pt-16 p-6 container mx-auto font-plus-jakarta-sans overflow-auto min-h-screen">
+    <main className="p-6 container mx-auto font-plus-jakarta-sans overflow-auto min-h-[90vh] [grid-area:content]">
       <section
         style={{
           gridTemplateColumns: `repeat(${columnsCount}, 280px)`,

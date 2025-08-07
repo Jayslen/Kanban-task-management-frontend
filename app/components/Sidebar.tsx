@@ -7,7 +7,8 @@ import { type Board, type Boards } from '@globlaTypes'
 import { Toggle } from './Toggle'
 import { useNavigate, NavLink } from 'react-router'
 
-export function SideBar() {
+export function SideBar(prorps: { toggleSideBar: () => void }) {
+  const { toggleSideBar } = prorps
   const [boards, setBoards] = useState<Board[]>()
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export function SideBar() {
   }, [])
 
   return (
-    <aside className="w-[300px] h-screen dark:bg-dark-grey grid grid-rows-[auto_1fr_auto]">
+    <aside className="w-[300px] h-screen dark:bg-dark-grey grid grid-rows-[auto_1fr_auto] [grid-area:sidebar]">
       <header className="px-6 pt-6 mb-[54px]">
         <NavLink to="/">
           <img src={LogoSvg} alt="Logo kaban" />
@@ -60,9 +61,14 @@ export function SideBar() {
 
       <footer className="flex flex-col gap-5 p-6">
         <Toggle />
-        <button className="flex gap-3 items-center cursor-pointer">
+        <button
+          className="flex gap-3 items-center cursor-pointer"
+          onClick={toggleSideBar}
+        >
           <img src={HideSideBarIcon} alt="" />
-          <span className="text-medium-grey heading-m">Hide sidebar</span>
+          <label htmlFor="hide-side" className="text-medium-grey heading-m">
+            Hide sidebar
+          </label>
         </button>
       </footer>
     </aside>

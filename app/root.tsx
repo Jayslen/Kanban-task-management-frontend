@@ -10,6 +10,9 @@ import {
 import type { Route } from './+types/root'
 import './app.css'
 import { SideBar } from './components/Sidebar'
+import { Header } from './components/Header'
+import { useState } from 'react'
+import { ToggleSidebarBtn } from './components/ToggleSideBar'
 
 export function links() {
   return [
@@ -23,6 +26,10 @@ export function links() {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [sideBarOpen, setSideBarOpen] = useState<Boolean>(true)
+  const toggleSideBar = () => {
+    setSideBarOpen((prev) => !prev)
+  }
   return (
     <html lang="en" className="dark">
       <head>
@@ -31,8 +38,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="grid grid-cols-[300px_1fr]">
-        <SideBar />
+      <body
+        className="grid grid-cols-[300px_1fr]"
+        style={{
+          gridTemplateAreas: sideBarOpen
+            ? '"sidebar header" "sidebar content"'
+            : '"header header" "content content"',
+        }}
+      >
+        {!sideBarOpen && <ToggleSidebarBtn toggleSideBar={toggleSideBar} />}
+        {sideBarOpen && <SideBar toggleSideBar={toggleSideBar} />}
+        <Header />
         {children}
         <ScrollRestoration />
         <Scripts />
