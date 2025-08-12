@@ -4,7 +4,7 @@ import { BoardTask } from '~/components/board/BoardTask'
 import type { Task } from '~/types/global'
 import { TaskStatusColor } from '~/types/global'
 import { useState } from 'react'
-import { TaskPopup } from '~/components/board/TaskPopup'
+import { TaskPopup } from '~/components/board/ViewTaskPopup'
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const response = await fetch('../app/mockup/data.json')
@@ -83,7 +83,7 @@ export default function Board({ loaderData }: Route.ComponentProps) {
         </div>
       </section>
       {taskSelected && (
-        <TaskPopup task={taskSelected} onClose={closeTaskPopup} />
+        <TaskPopup task={taskSelected} closePopup={closeTaskPopup} />
       )}
     </main>
   )
