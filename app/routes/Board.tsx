@@ -1,9 +1,9 @@
+import { useState } from 'react'
 import type { Route } from './+types/Board'
 import type { Boards } from '~/types/global'
 import { BoardTask } from '~/components/board/BoardTask'
 import type { Task } from '~/types/global'
 import { TaskStatusColor } from '~/types/global'
-import { useState } from 'react'
 import { TaskPopup } from '~/components/board/ViewTaskPopup'
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
@@ -21,12 +21,12 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
 
 export function HydrateFallback() {
   return (
-    <main className="pt-16 p-4 container mx-auto">
+    <section className="container mx-auto grid place-content-center">
       <h1 className="heading-l">Loading Board...</h1>
       <p className="text-medium-grey">
         Please wait while we load the board data.
       </p>
-    </main>
+    </section>
   )
 }
 
@@ -52,12 +52,13 @@ export default function Board({ loaderData }: Route.ComponentProps) {
   const columns = board?.columns
   const columnsCount = columns?.length ? columns.length + 1 : 1
   return (
-    <main className="p-6 container mx-auto font-plus-jakarta-sans overflow-auto min-h-[90vh] [grid-area:content]">
-      <section
+    <section className="font-plus-jakarta-sans grid p-6 h-full w-full">
+      <div
         style={{
           gridTemplateColumns: `repeat(${columnsCount}, 280px)`,
+          gridAutoRows: 'min-content',
         }}
-        className="grid h-full gap-6 overflow-auto overflow-y-auto custom-scrollbar"
+        className="grid gap-6 overflow-auto custom-scrollbar"
       >
         {columns?.map(({ name, tasks }) => {
           const color = TaskStatusColor[name as keyof typeof TaskStatusColor]
@@ -81,10 +82,10 @@ export default function Board({ loaderData }: Route.ComponentProps) {
         <div className="dark:bg-very-dark-grey-dark-bg grid place-content-center">
           <button className="heading-l text-medium-grey">+ New Column</button>
         </div>
-      </section>
+      </div>
       {taskSelected && (
         <TaskPopup task={taskSelected} closePopup={closeTaskPopup} />
       )}
-    </main>
+    </section>
   )
 }

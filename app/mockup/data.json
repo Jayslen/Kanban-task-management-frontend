@@ -281,6 +281,38 @@
               ]
             }
           ]
+        },
+        {
+          "name": "Drop",
+          "tasks": [
+            {
+              "title": "This is a dropped task",
+              "description": "This task was dropped and is no longer relevant.",
+              "status": "Drop",
+              "subtasks": [
+                {
+                  "title": "This is a dropped subtask",
+                  "isCompleted": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Archived",
+          "tasks": [
+            {
+              "title": "This is an archived task",
+              "description": "This task was archived and is no longer active.",
+              "status": "Archived",
+              "subtasks": [
+                {
+                  "title": "This is an archived subtask",
+                  "isCompleted": true
+                }
+              ]
+            }
+          ]
         }
       ]
     },

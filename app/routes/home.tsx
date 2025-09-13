@@ -10,7 +10,9 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   return (
     <main className="m-auto text-center">
-      <h2 className="text-medium-grey heading-l my-2">No board selected</h2>
+      <h2 className="text-medium-grey heading-l my-2 min-h-[90vh] [grid-area:content] grid place-content-center">
+        No board selected
+      </h2>
     </main>
   )
 }

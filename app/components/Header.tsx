@@ -8,10 +8,10 @@ export function Header() {
   }
   return (
     <>
-      <header className="flex justify-between items-center dark:bg-dark-grey dark:text-white p-4 [grid-area:header]">
+      <header className="flex justify-between items-center dark:bg-dark-grey dark:text-white p-4 [grid-area:header] w-full">
         <h1 className="heading-xl">Platform Launch</h1>
         <button
-          className="primary-btn-l w-40 heading-m"
+          className="primary-btn-l w-40 heading-m text-white"
           onClick={handleAddNewTaskClick}
         >
           + Add New Task
