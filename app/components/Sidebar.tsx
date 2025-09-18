@@ -1,33 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { NavLink } from 'react-router'
 import LogoSvg from '@assets/logo-light.svg'
 import { BoardIcon } from '@assets/BoardIcon'
 import HideSideBarIcon from '@assets/icon-hide-sidebar.svg'
-import { type Board, type Boards } from '@globlaTypes'
 import { Toggle } from './Toggle'
-import { NavLink } from 'react-router'
 import { NewBoardPopup } from './board/NewBoardPopup'
+import { useBoards } from '~/context/UseBoards'
 
 export function SideBar(props: { toggleSideBar: () => void }) {
   const { toggleSideBar } = props
-  const [boards, setBoards] = useState<Board[]>()
   const [newBoardPopupOpen, setNewBoardPopupOpen] = useState(false)
+  const { boards } = useBoards()
 
   const handlePopup = () => {
     setNewBoardPopupOpen((prev) => !prev)
   }
-
-  useEffect(() => {
-    // Simulate fetching boards from an API or data source
-    const fetchBoards = async () => {
-      const response = await fetch('../app/mockup/data.json')
-      if (!response.ok) {
-        throw new Error('Failed to fetch boards')
-      }
-      const bordsData = (await response.json()) as Boards
-      setBoards(bordsData.boards)
-    }
-    fetchBoards()
-  }, [])
 
   return (
     <>
@@ -41,13 +28,13 @@ export function SideBar(props: { toggleSideBar: () => void }) {
 
         <nav className="flex flex-col gap-4">
           <h3 className="heading-s text-medium-grey uppercase px-7">
-            All boards (8)
+            All boards ({boards?.length})
           </h3>
           <ul className="flex flex-col ">
             {boards?.map((board) => (
-              <li key={board.id}>
+              <li key={board.boardId}>
                 <NavLink
-                  to={`/board/${board.id}`}
+                  to={`/board/${board.boardId}`}
                   className={({ isActive }) =>
                     `w-[276px] h-12 heading-m flex items-center px-7 gap-4 rounded-r-full transition-colors duration-300 dark:text-medium-grey dark:hover:text-main-purple dark:hover:bg-white ${isActive ? 'first:bg-main-purple first:text-white' : null}`
                   }

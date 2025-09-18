@@ -1,30 +1,51 @@
-import { useId } from 'react'
+import { useId, useRef, useState } from 'react'
 import ArrowDown from '@assets/icon-chevron-down.svg'
 import crossIcon from '@assets/icon-cross.svg'
 
-export function TaskSelectInput(props: { status: string }) {
-  const { status } = props
+export function TaskSelectInput({
+  status,
+  defaultStatus,
+}: {
+  status: { name: string; id: number }[]
+  defaultStatus: string | undefined
+}) {
+  const [currentStatus, setCurrentStatus] = useState(defaultStatus)
+  const inputElement = useRef<HTMLInputElement>(null)
   return (
     <div className="h-10 border border-medium-grey/25 rounded-sm relative">
       <label
         htmlFor="task-status"
         className="flex justify-between items-center h-full px-4 typo-body-l dark:text-white cursor-pointer"
       >
-        {status}
+        {currentStatus}
         <img src={ArrowDown} alt="Arrow down icon" />
       </label>
 
       <input
         type="checkbox"
+        ref={inputElement}
         name="task-status"
         id="task-status"
         className="hidden peer "
       />
 
       <ul className="hidden peer-checked:flex flex-col gap-2 typo-body-m p-4 rounded-lg dark:bg-very-dark-grey-dark-bg dark:text-medium-grey mt-1.5 cursor-pointer z-20 absolute w-full">
-        <li>Doing</li>
-        <li>Done</li>
-        <li>To do</li>
+        {status.map(({ name, id }) => {
+          return (
+            <li
+              key={id}
+              className="hover:text-main-purple"
+              onClick={() => {
+                setCurrentStatus(name)
+                if (inputElement.current) {
+                  inputElement.current.checked = false
+                }
+              }}
+            >
+              {name}
+            </li>
+          )
+        })}
       </ul>
     </div>
   )

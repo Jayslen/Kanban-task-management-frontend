@@ -1,8 +1,12 @@
 import { Popup } from '../PopupLayout'
 import { FormInput, SubtaskInput, TaskSelectInput } from './TasksInputs'
+import { useCurrentBoard } from '~/context/useCurrentBoard'
 
 export function NewTask(props: { closePopup: () => void }) {
   const { closePopup } = props
+  const { board } = useCurrentBoard()
+  const status =
+    board?.columns.map((col) => ({ name: col.name, id: col.id })) || []
   return (
     <Popup closePopup={closePopup}>
       <header>
@@ -34,7 +38,7 @@ export function NewTask(props: { closePopup: () => void }) {
 
         <div>
           <label className="heading-m dark:text-white">Status</label>
-          <TaskSelectInput status="Todo" />
+          <TaskSelectInput defaultStatus={status[0].name} status={status} />
         </div>
         <button className="primary-btn-l w-full">Add new Task</button>
       </form>
