@@ -1,39 +1,27 @@
-export type Boards = {
-    boards: Board[]
-};
-
 export interface Board {
-    id: string;
+    boardId: string;
     name: string;
+    createdAt: Date;
     columns: Column[];
 }
 
 export interface Column {
+    id: number;
     name: string;
     tasks: Task[];
 }
 
 export interface Task {
-    title: string;
+    id: string;
+    name: string;
     description: string;
-    status: string;
+    column_id: number;
     subtasks: Subtask[];
 }
 
-export enum Status {
-    Doing = "Doing",
-    Done = "Done",
-    Empty = "",
-    Todo = "Todo",
-}
-
 export interface Subtask {
-    title: string;
-    isCompleted: boolean;
-}
-
-export enum TaskStatusColor {
-    Todo = '#49C4E5',
-    Doing = '#8471F2',
-    Done = '#67E2AE'
+    id: number;
+    name: string;
+    isComplete: boolean;
+    task_id: string;
 }
