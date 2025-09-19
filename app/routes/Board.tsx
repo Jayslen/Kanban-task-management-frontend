@@ -51,11 +51,10 @@ export default function Board({ loaderData }: Route.ComponentProps) {
   const { board, setCurrentBoard } = useCurrentBoard()
   useEffect(() => {
     setCurrentBoard(loaderData)
-
     return () => {
       setCurrentBoard(null)
     }
-  }, [])
+  }, [loaderData])
 
   const updateTasksSelected = (updatedTask: Task) => {
     setTaskSelected(updatedTask)
