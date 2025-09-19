@@ -68,7 +68,7 @@ body {
   }
 
   .secondary-btn {
-    @apply w-64 h-10 rounded-3xl dark:bg-white dark:text-main-purple text-[13px] font-bold cursor-pointer;
+    @apply w-64 h-10 rounded-3xl dark:bg-white dark:hover:bg-white/75 dark:text-main-purple text-[13px] font-bold cursor-pointer transition-colors duration-200 ease-in-out;
   }
 
   .delete-btn {

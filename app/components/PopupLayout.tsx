@@ -1,9 +1,9 @@
 export function Popup(props: {
   children: React.ReactNode
   closePopup: () => void
-  autoHeight?: boolean
+  height?: string
 }) {
-  const { children, closePopup, autoHeight = false } = props
+  const { children, closePopup, height = '520px' } = props
   const handleBackdropClick = () => {
     console.log('Backdrop clicked, closing popup')
     closePopup()
@@ -18,7 +18,8 @@ export function Popup(props: {
       onClick={handleBackdropClick}
     >
       <section
-        className={`w-[480px] max-h-[600px] min-h-[520px] flex flex-col gap-6 dark:bg-dark-grey rounded-md p-8 overflow-auto custom-scrollbar`}
+        className="w-[480px] max-h-[600px] min-h-[520px] flex flex-col gap-6 dark:bg-dark-grey rounded-md p-8 overflow-auto custom-scrollbar"
+        style={{ minHeight: height ?? '520px' }}
         onClick={handleSectionClick}
       >
         {children}

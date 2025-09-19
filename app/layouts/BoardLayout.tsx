@@ -8,7 +8,7 @@ import { useBoards } from '~/context/UseBoards'
 export default function Layout() {
   const [sideBarOpen, setSideBarOpen] = useState<Boolean>(true)
   const toggleSideBar = () => setSideBarOpen((prev) => !prev)
-  const { addBoard } = useBoards()
+  const { addBoards } = useBoards()
 
   useEffect(() => {
     document.body.classList.add('board-layout')
@@ -30,7 +30,7 @@ export default function Layout() {
         console.error(responseError.message)
       } else {
         const boardsResponse = await response.json()
-        addBoard(boardsResponse)
+        addBoards(boardsResponse)
       }
     }
 

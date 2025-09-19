@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { Link } from 'react-router'
 import { NewTask } from '~/components/board/NewTaskPopup'
 import { useBoards } from '~/context/UseBoards'
+import { useCurrentBoard } from '~/context/useCurrentBoard'
 
 export function Header() {
   const [newTaskPopupOpen, setNewTaskPopupOpen] = useState<Boolean>(false)
@@ -9,6 +11,7 @@ export function Header() {
     setNewTaskPopupOpen((prev) => !prev)
   }
   const { isLoggedIn } = useBoards()
+  const { board } = useCurrentBoard()
   return (
     <>
       <header className="flex justify-between items-center dark:bg-dark-grey dark:text-white p-4 [grid-area:header] w-full">
@@ -24,7 +27,13 @@ export function Header() {
           )}
           <button
             className="primary-btn-l w-40 heading-m text-white"
-            onClick={handleAddNewTaskClick}
+            onClick={() => {
+              if (!board) {
+                toast.error('Please select a board first')
+                return
+              }
+              handleAddNewTaskClick()
+            }}
           >
             + Add New Task
           </button>

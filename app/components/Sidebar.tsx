@@ -6,11 +6,12 @@ import HideSideBarIcon from '@assets/icon-hide-sidebar.svg'
 import { Toggle } from './Toggle'
 import { NewBoardPopup } from './board/NewBoardPopup'
 import { useBoards } from '~/context/UseBoards'
+import toast from 'react-hot-toast'
 
 export function SideBar(props: { toggleSideBar: () => void }) {
   const { toggleSideBar } = props
   const [newBoardPopupOpen, setNewBoardPopupOpen] = useState(false)
-  const { boards } = useBoards()
+  const { boards, isLoggedIn } = useBoards()
 
   const handlePopup = () => {
     setNewBoardPopupOpen((prev) => !prev)
@@ -47,7 +48,11 @@ export function SideBar(props: { toggleSideBar: () => void }) {
             <li>
               <button
                 className="dark:text-main-purple w-[276px] h-12 heading-m px-7 flex items-center gap-4 rounded-r-full"
-                onClick={() => handlePopup()}
+                onClick={() => {
+                  if (!isLoggedIn)
+                    return toast.error('You need to be logged in')
+                  handlePopup()
+                }}
               >
                 <BoardIcon />
                 <span>+ Create New Board</span>
