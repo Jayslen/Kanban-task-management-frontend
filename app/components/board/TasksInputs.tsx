@@ -81,7 +81,7 @@ export function InputText({
   ...props
 }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <label className="heading-m dark:text-white relative">
+    <label className="heading-m w-full dark:text-white relative">
       {label}
       <input
         type="text"

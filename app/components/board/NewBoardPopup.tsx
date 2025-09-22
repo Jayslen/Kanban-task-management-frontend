@@ -1,24 +1,23 @@
-import { useState, type FormEvent } from 'react'
+import { type FormEvent } from 'react'
+import toast from 'react-hot-toast'
+import { useBoards } from '~/context/UseBoards'
+import { useIncreaseInputs } from '~/hooks/useIncreseInputs'
 import { Popup } from '../PopupLayout'
 import { InputText } from './TasksInputs'
-import { IconCross } from '@assets/IconCross'
-import debounce from 'just-debounce-it'
-import '../../inputStyles.css'
 import type { Board } from '~/types/global'
-import { useBoards } from '~/context/UseBoards'
-import toast from 'react-hot-toast'
+import { IconCross } from '@assets/IconCross'
+import '../../inputStyles.css'
 
 export function NewBoardPopup(props: { closePopup: () => void }) {
   const { closePopup } = props
-  const [columns, setColumns] = useState(['', ''])
   const { newBoard } = useBoards()
-
-  const updateColumnName = debounce((value: string, index: number) => {
-    if (value.length === 0) return
-    const newColumns = [...columns]
-    newColumns[index] = value
-    setColumns(newColumns)
-  }, 600)
+  const {
+    inputs,
+    inputContainerId,
+    updateInputValue,
+    addNewInput,
+    deleteInput,
+  } = useIncreaseInputs()
 
   const createNewBoard = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -61,12 +60,12 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
         />
         <div
           className=" flex flex-col gap-2 grow h-full custom-scrollbar"
-          id="columnsContainer"
+          id={inputContainerId}
         >
           <h3 className="heading-m dark:text-white">Columns</h3>
-          {columns.map((_, index) => (
+          {inputs.map((_, index) => (
             <div
-              className="grid grid-cols-[1fr_auto] items-center gap-2 w-full relative"
+              className="w-full flex items-center gap-4 relative"
               key={index}
             >
               <InputText
@@ -76,38 +75,18 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
                 name={`column-${index}`}
                 minLength={4}
                 maxLength={20}
-                onChange={(e) => updateColumnName(e.target.value, index)}
+                onChange={(e) => updateInputValue(e.target.value, index)}
               />
               <IconCross
                 className="text-[#828FA3] cursor-pointer hover:text-red"
-                onClick={() => {
-                  setColumns((prev) => prev.filter((_, i) => i !== index))
-                }}
+                onClick={() => deleteInput(index)}
               />
             </div>
           ))}
           <button
             className="secondary-btn w-full mt-2"
             type="button"
-            onClick={() => {
-              const isColumnEmpty = columns.some((col) => col.length === 0)
-              if (isColumnEmpty) {
-                const inputs = document
-                  .getElementById('columnsContainer')
-                  ?.getElementsByTagName('input')
-                Array.from(inputs || []).forEach((input) => {
-                  if (input.value.length === 0) {
-                    input.parentElement?.classList.add('column-empty')
-                    setTimeout(() => {
-                      input.parentElement?.classList.remove('column-empty')
-                    }, 3000)
-                  }
-                })
-
-                return
-              }
-              setColumns((prev) => [...prev, ''])
-            }}
+            onClick={addNewInput}
           >
             Add new column
           </button>
