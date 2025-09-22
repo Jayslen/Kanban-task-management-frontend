@@ -18,11 +18,12 @@ label:has(:focus-visible:valid) input {
   outline-color: tomato;
 }
 
-.column-empty::before {
-content: "Can't be empty";
-color: tomato;
-position: absolute;
-top: 50%;
-transform: translateY(-50%);
-right: 10%;
+.column-empty::after {
+  content: "Can't be empty";
+  position: absolute;
+  right: 10px; /* Ajusta según necesites */
+  top: 35%;
+  /* transform: translateY(-50%); */
+  font-size: 14px;
+  color: red;
 }

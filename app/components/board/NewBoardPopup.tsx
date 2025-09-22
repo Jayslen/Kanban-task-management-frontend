@@ -1,6 +1,6 @@
-import { useState, type FormEvent, type FormEventHandler } from 'react'
+import { useState, type FormEvent } from 'react'
 import { Popup } from '../PopupLayout'
-import { FormInput, SubtaskInput } from './TasksInputs'
+import { InputText } from './TasksInputs'
 import { IconCross } from '@assets/IconCross'
 import debounce from 'just-debounce-it'
 import '../../inputStyles.css'
@@ -54,69 +54,65 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
         <h2 className="heading-l dark:text-white">Add New Board</h2>
       </header>
       <form className="flex flex-col gap-6" onSubmit={createNewBoard}>
-        <FormInput label="Board Name">
-          <input
-            type="text"
-            name="boardName"
-            placeholder="e.g. Web Design"
-            className="border border-medium-grey/25 rounded-sm h-10 p-4 text-white/85 focus:outline-none"
-          />
-        </FormInput>
-        <FormInput label="Columns">
-          <div
-            className=" flex flex-col gap-2 grow h-full overflow-auto custom-scrollbar"
-            id="columnsContainer"
-          >
-            {columns.map((col, index) => (
-              <label className="flex items-center gap-2 w-full p-1 relative ">
-                <input
-                  type="text"
-                  placeholder="e.g. Make coffee"
-                  className="outline outline-medium-grey/25 h-10 rounded-sm p-2 text-white/85 grow "
-                  required
-                  name={`column-${index}`}
-                  minLength={4}
-                  maxLength={20}
-                  onChange={(e) => {
-                    updateColumnName(e.target.value, index)
-                  }}
-                />
-                <IconCross
-                  className="text-[#828FA3] cursor-pointer hover:text-red"
-                  onClick={() => {
-                    setColumns((prev) => prev.filter((_, i) => i !== index))
-                  }}
-                />
-              </label>
-            ))}
-            <button
-              className="secondary-btn w-full mt-2"
-              type="button"
-              onClick={() => {
-                const isColumnEmpty = columns.some((col) => col.length === 0)
-                if (isColumnEmpty) {
-                  const inputs = document
-                    .getElementById('columnsContainer')
-                    ?.getElementsByTagName('input')
-                  Array.from(inputs || []).forEach((input) => {
-                    if (input.value.length === 0) {
-                      input.parentElement?.classList.add('column-empty')
-                      setTimeout(() => {
-                        input.parentElement?.classList.remove('column-empty')
-                      }, 3000)
-                    }
-                  })
-
-                  return
-                }
-                setColumns((prev) => [...prev, ''])
-              }}
+        <InputText
+          label="Board Name"
+          name="boardName"
+          placeholder="e.g. Web Desing"
+        />
+        <div
+          className=" flex flex-col gap-2 grow h-full custom-scrollbar"
+          id="columnsContainer"
+        >
+          <h3 className="heading-m dark:text-white">Columns</h3>
+          {columns.map((_, index) => (
+            <div
+              className="grid grid-cols-[1fr_auto] items-center gap-2 w-full relative"
+              key={index}
             >
-              Add new column
-            </button>
-          </div>
-        </FormInput>
-        <button className="primary-btn-l w-full">Add new Board</button>
+              <InputText
+                label=""
+                placeholder=""
+                required
+                name={`column-${index}`}
+                minLength={4}
+                maxLength={20}
+                onChange={(e) => updateColumnName(e.target.value, index)}
+              />
+              <IconCross
+                className="text-[#828FA3] cursor-pointer hover:text-red"
+                onClick={() => {
+                  setColumns((prev) => prev.filter((_, i) => i !== index))
+                }}
+              />
+            </div>
+          ))}
+          <button
+            className="secondary-btn w-full mt-2"
+            type="button"
+            onClick={() => {
+              const isColumnEmpty = columns.some((col) => col.length === 0)
+              if (isColumnEmpty) {
+                const inputs = document
+                  .getElementById('columnsContainer')
+                  ?.getElementsByTagName('input')
+                Array.from(inputs || []).forEach((input) => {
+                  if (input.value.length === 0) {
+                    input.parentElement?.classList.add('column-empty')
+                    setTimeout(() => {
+                      input.parentElement?.classList.remove('column-empty')
+                    }, 3000)
+                  }
+                })
+
+                return
+              }
+              setColumns((prev) => [...prev, ''])
+            }}
+          >
+            Add new column
+          </button>
+          <button className="primary-btn-l w-full">Add new Board</button>
+        </div>
       </form>
     </Popup>
   )

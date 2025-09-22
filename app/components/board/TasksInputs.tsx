@@ -1,6 +1,5 @@
-import { useId, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import ArrowDown from '@assets/icon-chevron-down.svg'
-import crossIcon from '@assets/icon-cross.svg'
 
 export function TaskSelectInput({
   status,
@@ -51,32 +50,6 @@ export function TaskSelectInput({
   )
 }
 
-export function FormInput(props: {
-  label?: string
-  placeholder?: string
-  type?: string
-  children?: React.ReactNode
-}) {
-  const { label, placeholder, type = 'text', children } = props
-  const id = useId()
-  return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="heading-m dark:text-white">
-        {label}
-      </label>
-      {children && children}
-      {!children && (
-        <input
-          type={type}
-          id={id}
-          placeholder={placeholder}
-          className="border border-medium-grey/25 rounded-sm h-10 p-4 text-white/85 focus:outline-none"
-        />
-      )}
-    </div>
-  )
-}
-
 export function TaskCheckbox({ taskTitle }: { taskTitle: string }) {
   return (
     <label className="min-h-10 rounded-md p-3.5 dark:bg-very-dark-grey-dark-bg grid grid-cols-[auto_1fr] items-center gap-2 cursor-pointer">
@@ -103,15 +76,18 @@ export function TaskCheckbox({ taskTitle }: { taskTitle: string }) {
   )
 }
 
-export function SubtaskInput() {
+export function InputText({
+  label,
+  ...props
+}: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <div className="flex items-center gap-2 w-full">
+    <label className="heading-m dark:text-white relative">
+      {label}
       <input
         type="text"
-        placeholder="e.g. Make coffee"
-        className="border h-10 border-medium-grey/25 rounded-sm p-2 text-white/85 focus:outline-none grow"
+        {...props}
+        className="outline outline-medium-grey/25 rounded-sm h-10 p-4 text-white/85 block grow w-full mt-2"
       />
-      <img src={crossIcon} alt="" className="" />
-    </div>
+    </label>
   )
 }
