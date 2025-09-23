@@ -10,7 +10,7 @@ export function useIncreaseInputs() {
     const newInputs = [...inputs]
     newInputs[index] = value
     setInputs(newInputs)
-  }, 600)
+  }, 300)
 
   const deleteInput = (index: number) => {
     if (inputs.length <= 2) return
@@ -29,7 +29,7 @@ export function useIncreaseInputs() {
           input.parentElement?.classList.add('column-empty')
           setTimeout(() => {
             input.parentElement?.classList.remove('column-empty')
-          }, 3000)
+          }, 900)
         }
       })
     } else {

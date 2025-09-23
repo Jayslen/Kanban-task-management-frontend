@@ -3,12 +3,13 @@ import ArrowDown from '@assets/icon-chevron-down.svg'
 
 export function TaskSelectInput({
   status,
-  defaultStatus,
+  currentStatus,
+  updateStatus,
 }: {
   status: { name: string; id: number }[]
-  defaultStatus: string | undefined
+  currentStatus: { name: string; id: number } | undefined
+  updateStatus: (status: { name: string; id: number }) => void
 }) {
-  const [currentStatus, setCurrentStatus] = useState(defaultStatus)
   const inputElement = useRef<HTMLInputElement>(null)
   return (
     <div className="h-10 border border-medium-grey/25 rounded-sm relative">
@@ -16,7 +17,7 @@ export function TaskSelectInput({
         htmlFor="task-status"
         className="flex justify-between items-center h-full px-4 typo-body-l dark:text-white cursor-pointer"
       >
-        {currentStatus}
+        {currentStatus?.name}
         <img src={ArrowDown} alt="Arrow down icon" />
       </label>
 
@@ -35,7 +36,7 @@ export function TaskSelectInput({
               key={id}
               className="hover:text-main-purple"
               onClick={() => {
-                setCurrentStatus(name)
+                updateStatus({ name, id })
                 if (inputElement.current) {
                   inputElement.current.checked = false
                 }
@@ -81,12 +82,12 @@ export function InputText({
   ...props
 }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <label className="heading-m w-full dark:text-white relative">
-      {label}
+    <label className="w-full dark:text-white relative flex flex-col gap-2">
+      <span className="heading-m">{label}</span>
       <input
         type="text"
         {...props}
-        className="outline outline-medium-grey/25 rounded-sm h-10 p-4 text-white/85 block grow w-full mt-2"
+        className="outline text-sm outline-medium-grey/25 rounded-sm h-10 p-4 text-white/85 block grow w-full"
       />
     </label>
   )

@@ -6,12 +6,16 @@ label:has(:focus:valid) {
   color: limegreen;
 }
 
-label:has(:focus-visible:invalid) input {
+label:has(:focus-visible:invalid) input{
   outline-color: pink;
 }
 
 label:has(:focus-visible:valid) input {
   outline-color: lightgreen;
+}
+
+input { 
+  transition: all 0.3s;
 }
 
 .column-empty input {
