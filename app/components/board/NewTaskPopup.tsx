@@ -18,7 +18,7 @@ export function NewTask(props: { closePopup: () => void }) {
     addNewInput,
     deleteInput,
   } = useIncreaseInputs()
-  const { status, statusSelected, updateTaskStatus } = useTaskStatus()
+  const { status, statusSelected, updateStatus } = useTaskStatus()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -122,7 +122,7 @@ export function NewTask(props: { closePopup: () => void }) {
           <label className="heading-m dark:text-white">Status</label>
           <TaskSelectInput
             status={status}
-            updateStatus={updateTaskStatus}
+            updateStatus={updateStatus}
             currentStatus={statusSelected}
           />
         </div>

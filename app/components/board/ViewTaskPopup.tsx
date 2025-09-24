@@ -2,10 +2,10 @@ import type { Task } from '~/types/global'
 import { TaskCheckbox } from './TasksInputs'
 import { TaskSelectInput } from './TasksInputs'
 import { Popup } from '../PopupLayout'
+import { useTaskStatus } from '~/hooks/useTaskStatus'
 
 export function TaskPopup({
   task,
-  status,
   closePopup,
 }: {
   task: Task
@@ -13,10 +13,14 @@ export function TaskPopup({
   closePopup: () => void
 }) {
   const { name, description, column_id, subtasks } = task
-  const completedSubtasks = subtasks.filter(
+  const { status, statusSelected, updateStatus } = useTaskStatus({
+    columnStatusId: column_id,
+    taskId: task.id,
+    updateDB: true,
+  })
+  const completedSubtasks = subtasks?.filter(
     (subtask) => subtask.isComplete
   ).length
-  const currentStatus = status.find((s) => s.id === column_id)?.name
 
   return (
     <Popup closePopup={closePopup}>
@@ -29,20 +33,25 @@ export function TaskPopup({
 
       <div className="grow h-24 overflow-auto custom-scrollbar">
         <h3 className="heading-s dark:text-white mb-4">
-          Subtasks {`(${completedSubtasks} of ${subtasks.length})`}
+          Subtasks {`(${completedSubtasks} of ${subtasks?.length})`}
         </h3>
         <ul className="flex flex-col gap-3">
-          {subtasks.map((subtask) => (
-            <li>
-              <TaskCheckbox taskTitle={subtask.name} />
-            </li>
-          ))}
+          {subtasks &&
+            subtasks.map((subtask) => (
+              <li>
+                <TaskCheckbox taskTitle={subtask.name} />
+              </li>
+            ))}
         </ul>
       </div>
 
       <footer>
         <h3 className="heading-s dark:text-white mb-2">Current status</h3>
-        <TaskSelectInput status={status} defaultStatus={currentStatus} />
+        <TaskSelectInput
+          status={status}
+          currentStatus={statusSelected}
+          updateStatus={updateStatus}
+        />
       </footer>
     </Popup>
   )
