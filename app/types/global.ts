@@ -25,3 +25,10 @@ export interface Subtask {
     isComplete: boolean;
     task_id: string;
 }
+
+export interface APIError {
+    errorName: string;
+    message: string;
+    code: number;
+    errors?: [string][];
+}

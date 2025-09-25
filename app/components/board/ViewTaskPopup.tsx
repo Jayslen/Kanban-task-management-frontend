@@ -3,7 +3,7 @@ import { TaskCheckbox } from './TasksInputs'
 import { TaskSelectInput } from './TasksInputs'
 import { Popup } from '../PopupLayout'
 import { useTaskStatus } from '~/hooks/useTaskStatus'
-import { useState } from 'react'
+import { useEffect, useState, type ChangeEvent } from 'react'
 import toast from 'react-hot-toast'
 import { DeletePopup } from './DeletePopup'
 import { useCurrentBoard } from '~/context/useCurrentBoard'
@@ -17,7 +17,7 @@ export function TaskPopup({
   closePopup: () => void
 }) {
   const { name, description, column_id, subtasks } = task
-  const { board, deleteTask } = useCurrentBoard()
+  const { board, deleteTask, updateSubtaskStatus } = useCurrentBoard()
   const { status, statusSelected, updateStatus } = useTaskStatus({
     columnStatusId: column_id,
     taskId: task.id,
@@ -31,9 +31,9 @@ export function TaskPopup({
     setIsDeletePopupOpen((prev) => !prev)
   }
 
-  const completedSubtasks = subtasks?.filter(
-    (subtask) => subtask.isComplete
-  ).length
+  const [completedSubtasks, setCompletedSubtasks] = useState<number>(
+    subtasks?.filter((subtask) => subtask.isComplete).length || 0
+  )
 
   return (
     <>
@@ -67,11 +67,58 @@ export function TaskPopup({
           </h3>
           <ul className="flex flex-col gap-3">
             {subtasks &&
-              subtasks.map((subtask) => (
-                <li>
-                  <TaskCheckbox taskTitle={subtask.name} />
-                </li>
-              ))}
+              subtasks.map(
+                (subtask) => (
+                  console.log(subtask),
+                  (
+                    <li key={subtask.id}>
+                      <TaskCheckbox
+                        isComplete={subtask.isComplete}
+                        taskTitle={subtask.name}
+                        update={async (e) => {
+                          try {
+                            const response = await fetch(
+                              `http://localhost:3000/board/${board?.boardId}/task/${task.id}/subtask`,
+                              {
+                                method: 'PATCH',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                credentials: 'include',
+                                body: JSON.stringify({
+                                  subtaskId: subtask.id,
+                                  isCompleted: e.target.checked,
+                                }),
+                              }
+                            )
+
+                            if (!response.ok) {
+                              const errorResponse = await response.json()
+                              e.target.checked = !e.target.checked
+                              return toast.error(
+                                errorResponse.message || 'Something went wrong'
+                              )
+                            }
+
+                            updateSubtaskStatus(
+                              task.id,
+                              subtask.id,
+                              e.target.checked
+                            )
+                            setCompletedSubtasks((prev) => {
+                              if (e.target.checked) return prev + 1
+                              return prev - 1
+                            })
+                          } catch (error) {
+                            e.target.checked = !e.target.checked
+                            toast.error('Something went wrong')
+                          }
+                        }}
+                      />
+                    </li>
+                  )
+                )
+              )}
           </ul>
         </div>
 

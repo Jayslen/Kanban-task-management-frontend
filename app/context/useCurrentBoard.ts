@@ -7,6 +7,7 @@ interface CurrentBoard {
     addTask: (task: Task) => void
     updateTaskStatus: (taskId: string, newStatusId: number) => void
     deleteTask: (taskId: string) => void
+    updateSubtaskStatus: (taskId: string, subtaskId: number, isComplete: boolean) => void
 }
 
 export const useCurrentBoard = create<CurrentBoard>((set) => ({
@@ -71,6 +72,26 @@ export const useCurrentBoard = create<CurrentBoard>((set) => ({
         const updatedColumns = state.board.columns.map(col => ({
             ...col,
             tasks: col.tasks.filter(task => task.id !== taskId)
+        }))
+        return {
+            board: { ...state.board, columns: updatedColumns }
+        }
+    }),
+    updateSubtaskStatus: (taskId, subtaskId, isComplete) => set((state) => {
+        if (!state.board) return state
+        const updatedColumns = state.board.columns.map(col => ({
+            ...col,
+            tasks: col.tasks.map(task => {
+                if (task.id === taskId) {
+                    return {
+                        ...task,
+                        subtasks: task?.subtasks?.map(subtask =>
+                            subtask.id === subtaskId ? { ...subtask, isComplete } : subtask
+                        )
+                    }
+                }
+                return task
+            })
         }))
         return {
             board: { ...state.board, columns: updatedColumns }

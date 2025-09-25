@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, type ChangeEvent } from 'react'
 import ArrowDown from '@assets/icon-chevron-down.svg'
 
 export function TaskSelectInput({
@@ -51,10 +51,25 @@ export function TaskSelectInput({
   )
 }
 
-export function TaskCheckbox({ taskTitle }: { taskTitle: string }) {
+export function TaskCheckbox({
+  taskTitle,
+  isComplete,
+  update,
+}: {
+  taskTitle: string
+  isComplete: boolean
+  update: (e: ChangeEvent<HTMLInputElement>) => void
+}) {
   return (
     <label className="min-h-10 rounded-md p-3.5 dark:bg-very-dark-grey-dark-bg grid grid-cols-[auto_1fr] items-center gap-2 cursor-pointer">
-      <input type="checkbox" name="" id="" className="peer hidden" />
+      <input
+        type="checkbox"
+        defaultChecked={isComplete}
+        name=""
+        id=""
+        className="peer hidden"
+        onChange={(e) => update(e)}
+      />
       <div className="w-4 h-4 rounded-[2px] grid place-content-center text-transparent border border-medium-grey bg-dark-grey peer-checked:bg-main-purple peer-checked:text-white peer-checked:border-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
