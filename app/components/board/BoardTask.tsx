@@ -7,7 +7,7 @@ export function BoardTask({
   task: Task
   updateTasksSelected: (task: Task) => void
 }) {
-  const completedSubtasks = task.subtasks.filter(
+  const completedSubtasks = task?.subtasks?.filter(
     (subtask) => subtask.isComplete
   ).length
   return (
@@ -18,7 +18,7 @@ export function BoardTask({
       <h3 className="dark:text-white heading-m group-hover:dark:hover:text-main-purple ">
         {task.name}
       </h3>
-      <p className="typo-body-b dark:text-medium-grey">{`${completedSubtasks} of ${task.subtasks.length} substasks`}</p>
+      <p className="typo-body-b dark:text-medium-grey">{`${completedSubtasks} of ${task?.subtasks?.length} substasks`}</p>
     </li>
   )
 }

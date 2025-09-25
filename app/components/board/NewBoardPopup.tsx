@@ -44,6 +44,7 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
 
     const data = (await response.json()) as Board
     newBoard(data)
+    toast.success('Board created successfully')
     closePopup()
   }
 
