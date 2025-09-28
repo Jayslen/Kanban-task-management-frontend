@@ -1,11 +1,13 @@
+import { useState } from 'react'
+import toast from 'react-hot-toast'
 import type { Task } from '~/types/global'
 import { TaskCheckbox } from './TasksInputs'
 import { TaskSelectInput } from './TasksInputs'
 import { Popup } from '../PopupLayout'
 import { useTaskStatus } from '~/hooks/useTaskStatus'
-import { useEffect, useState, type ChangeEvent } from 'react'
-import toast from 'react-hot-toast'
 import { DeletePopup } from './DeletePopup'
+import { EditBoardBox } from '../EditBoardBox'
+import { EditTask } from './EditTask'
 import { useCurrentBoard } from '~/context/useCurrentBoard'
 
 export function TaskPopup({
@@ -24,11 +26,19 @@ export function TaskPopup({
     updateDB: true,
   })
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState<Boolean>(false)
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState<Boolean>(false)
   const handleDeleteBoardClick = () => {
     if (!task) {
       return toast.error('Please select a board first')
     }
     setIsDeletePopupOpen((prev) => !prev)
+  }
+
+  const handleEditBoardClick = () => {
+    if (!task) {
+      return toast.error('Please select a board first')
+    }
+    setIsEditPopupOpen((prev) => !prev)
   }
 
   const [completedSubtasks, setCompletedSubtasks] = useState<number>(
@@ -38,24 +48,12 @@ export function TaskPopup({
   return (
     <>
       <Popup closePopup={closePopup}>
-        <header className="flex justify-between">
+        <header className="flex justify-between relative">
           <h2 className="dark:text-white heading-l">{name}</h2>
-          <button
-            className="group cursor-pointer fill-[#828FA3] hover:fill-main-purple transition-colors"
-            onClick={handleDeleteBoardClick}
-          >
-            <svg
-              width="5"
-              height="20"
-              viewBox="0 0 5 20"
-              fill="auto"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="2.30769" cy="2.30769" r="2.30769" fill="auto" />
-              <circle cx="2.30769" cy="10" r="2.30769" fill="auto" />
-              <circle cx="2.30769" cy="17.6923" r="2.30769" fill="auto" />
-            </svg>
-          </button>
+          <EditBoardBox
+            handleDeleteBoardClick={handleDeleteBoardClick}
+            handleEditBoardClick={handleEditBoardClick}
+          />
         </header>
         <p className="typo-body-m dark:text-white">
           {description || 'No description provided.'}
@@ -67,58 +65,53 @@ export function TaskPopup({
           </h3>
           <ul className="flex flex-col gap-3">
             {subtasks &&
-              subtasks.map(
-                (subtask) => (
-                  console.log(subtask),
-                  (
-                    <li key={subtask.id}>
-                      <TaskCheckbox
-                        isComplete={subtask.isComplete}
-                        taskTitle={subtask.name}
-                        update={async (e) => {
-                          try {
-                            const response = await fetch(
-                              `http://localhost:3000/board/${board?.boardId}/task/${task.id}/subtask`,
-                              {
-                                method: 'PATCH',
-                                headers: {
-                                  'Content-Type': 'application/json',
-                                },
-                                credentials: 'include',
-                                body: JSON.stringify({
-                                  subtaskId: subtask.id,
-                                  isCompleted: e.target.checked,
-                                }),
-                              }
-                            )
-
-                            if (!response.ok) {
-                              const errorResponse = await response.json()
-                              e.target.checked = !e.target.checked
-                              return toast.error(
-                                errorResponse.message || 'Something went wrong'
-                              )
-                            }
-
-                            updateSubtaskStatus(
-                              task.id,
-                              subtask.id,
-                              e.target.checked
-                            )
-                            setCompletedSubtasks((prev) => {
-                              if (e.target.checked) return prev + 1
-                              return prev - 1
-                            })
-                          } catch (error) {
-                            e.target.checked = !e.target.checked
-                            toast.error('Something went wrong')
+              subtasks.map((subtask) => (
+                <li key={subtask.id}>
+                  <TaskCheckbox
+                    isComplete={subtask.isComplete}
+                    taskTitle={subtask.name}
+                    update={async (e) => {
+                      try {
+                        const response = await fetch(
+                          `http://localhost:3000/board/${board?.boardId}/task/${task.id}/subtask`,
+                          {
+                            method: 'PATCH',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify({
+                              subtaskId: subtask.id,
+                              isCompleted: e.target.checked,
+                            }),
                           }
-                        }}
-                      />
-                    </li>
-                  )
-                )
-              )}
+                        )
+
+                        if (!response.ok) {
+                          const errorResponse = await response.json()
+                          e.target.checked = !e.target.checked
+                          return toast.error(
+                            errorResponse.message || 'Something went wrong'
+                          )
+                        }
+
+                        updateSubtaskStatus(
+                          task.id,
+                          subtask.id,
+                          e.target.checked
+                        )
+                        setCompletedSubtasks((prev) => {
+                          if (e.target.checked) return prev + 1
+                          return prev - 1
+                        })
+                      } catch (error) {
+                        e.target.checked = !e.target.checked
+                        toast.error('Something went wrong')
+                      }
+                    }}
+                  />
+                </li>
+              ))}
           </ul>
         </div>
 
@@ -131,7 +124,6 @@ export function TaskPopup({
           />
         </footer>
       </Popup>
-
       {isDeletePopupOpen && (
         <DeletePopup
           closePopup={handleDeleteBoardClick}
@@ -157,6 +149,15 @@ export function TaskPopup({
             handleDeleteBoardClick()
             closePopup()
             toast.success('Task deleted successfully')
+          }}
+        />
+      )}
+      {isEditPopupOpen && (
+        <EditTask
+          task={task}
+          closePopup={() => {
+            closePopup()
+            handleEditBoardClick()
           }}
         />
       )}

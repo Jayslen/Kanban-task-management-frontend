@@ -1,4 +1,4 @@
-import { useRef, type ChangeEvent } from 'react'
+import { useId, useRef, type ChangeEvent } from 'react'
 import ArrowDown from '@assets/icon-chevron-down.svg'
 
 export function TaskSelectInput({
@@ -11,10 +11,11 @@ export function TaskSelectInput({
   updateStatus: (status: { name: string; id: number }) => void
 }) {
   const inputElement = useRef<HTMLInputElement>(null)
+  const inputId = useId()
   return (
     <div className="h-10 border border-medium-grey/25 rounded-sm relative">
       <label
-        htmlFor="task-status"
+        htmlFor={inputId}
         className="flex justify-between items-center h-full px-4 typo-body-l dark:text-white cursor-pointer"
       >
         {currentStatus?.name}
@@ -25,11 +26,11 @@ export function TaskSelectInput({
         type="checkbox"
         ref={inputElement}
         name="task-status"
-        id="task-status"
+        id={inputId}
         className="hidden peer "
       />
 
-      <ul className="hidden peer-checked:flex flex-col gap-2 typo-body-m p-4 rounded-lg dark:bg-very-dark-grey-dark-bg dark:text-medium-grey mt-1.5 cursor-pointer z-20 absolute w-full">
+      <ul className="hidden peer-checked:flex flex-col gap-2 typo-body-m p-4 rounded-lg dark:bg-very-dark-grey-dark-bg dark:text-medium-grey mt-1.5 cursor-pointer z-20 w-full">
         {status.map(({ name, id }) => {
           return (
             <li

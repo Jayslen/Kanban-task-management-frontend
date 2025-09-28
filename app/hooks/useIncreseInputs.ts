@@ -1,8 +1,8 @@
 import debounce from 'just-debounce-it'
 import { useId, useState } from 'react'
 
-export function useIncreaseInputs() {
-  const [inputs, setInputs] = useState(['', ''])
+export function useIncreaseInputs(defaultInputs: (string | any)[] = ['', '']) {
+  const [inputs, setInputs] = useState(defaultInputs)
   const inputContainerId = useId()
 
   const updateInputValue = debounce((value: string, index: number) => {
@@ -12,14 +12,21 @@ export function useIncreaseInputs() {
     setInputs(newInputs)
   }, 300)
 
-  const deleteInput = (index: number) => {
-    if (inputs.length <= 2) return
+  const deleteInput = (index: number, deleteAll = false) => {
+    if (inputs.length <= 2 && !deleteAll) return
+    if (inputs.length === 0) return
+
     const newInputs = inputs.filter((_, i) => i !== index)
     setInputs(newInputs)
   }
 
   const addNewInput = () => {
-    const areInputsEmpty = inputs.some((col) => col.length === 0)
+    const areInputsEmpty = inputs.some((col) => {
+      if (typeof col === 'string') {
+        return col.length === 0
+      }
+      return (col as { name: string; id: number }).name.length === 0
+    })
     if (areInputsEmpty) {
       const inputs = document
         .getElementById(inputContainerId)
@@ -42,6 +49,7 @@ export function useIncreaseInputs() {
     updateInputValue,
     deleteInput,
     addNewInput,
+    setInputs,
     inputContainerId,
   }
 }

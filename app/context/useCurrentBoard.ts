@@ -8,6 +8,7 @@ interface CurrentBoard {
     updateTaskStatus: (taskId: string, newStatusId: number) => void
     deleteTask: (taskId: string) => void
     updateSubtaskStatus: (taskId: string, subtaskId: number, isComplete: boolean) => void
+    updatetask: (updatedTask: Partial<Task>) => void
 }
 
 export const useCurrentBoard = create<CurrentBoard>((set) => ({
@@ -92,6 +93,18 @@ export const useCurrentBoard = create<CurrentBoard>((set) => ({
                 }
                 return task
             })
+        }))
+        return {
+            board: { ...state.board, columns: updatedColumns }
+        }
+    }),
+    updatetask: (updatedTask) => set((state) => {
+        if (!state.board) return state
+        const updatedColumns = state.board.columns.map(col => ({
+            ...col,
+            tasks: col.tasks.map(task =>
+                task.id === updatedTask.id ? { ...task, ...updatedTask } : task
+            )
         }))
         return {
             board: { ...state.board, columns: updatedColumns }
