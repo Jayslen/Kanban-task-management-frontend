@@ -5,11 +5,14 @@ import { NewTask } from '~/components/board/NewTaskPopup'
 import { useBoards } from '~/context/UseBoards'
 import { useCurrentBoard } from '~/context/useCurrentBoard'
 import { DeletePopup } from './board/DeletePopup'
+import { EditBoardBox } from './EditBoardBox'
+import { EditBoard } from './board/EditBoard'
 
 export function Header() {
   const navigate = useNavigate()
   const [newTaskPopupOpen, setNewTaskPopupOpen] = useState<Boolean>(false)
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState<Boolean>(false)
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState<Boolean>(false)
   const { isLoggedIn, deleteBoard } = useBoards()
   const { board } = useCurrentBoard()
 
@@ -25,11 +28,17 @@ export function Header() {
     }
     setIsDeletePopupOpen((prev) => !prev)
   }
+  const handleEditBoardClick = () => {
+    if (!board) {
+      return toast.error('Please select a board first')
+    }
+    setIsEditPopupOpen((prev) => !prev)
+  }
   return (
     <>
       <header className="flex justify-between items-center dark:bg-dark-grey dark:text-white p-4 [grid-area:header] w-full">
         <h1 className="heading-xl">Platform Launch</h1>
-        <div className="flex gap-6">
+        <div className="flex gap-6 items-center">
           {!isLoggedIn && (
             <Link
               to="/login"
@@ -50,22 +59,10 @@ export function Header() {
           >
             + Add New Task
           </button>
-          <button
-            className="group cursor-pointer fill-[#828FA3] hover:fill-main-purple transition-colors"
-            onClick={handleDeleteBoardClick}
-          >
-            <svg
-              width="5"
-              height="20"
-              viewBox="0 0 5 20"
-              fill="auto"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="2.30769" cy="2.30769" r="2.30769" fill="auto" />
-              <circle cx="2.30769" cy="10" r="2.30769" fill="auto" />
-              <circle cx="2.30769" cy="17.6923" r="2.30769" fill="auto" />
-            </svg>
-          </button>
+          <EditBoardBox
+            handleDeleteBoardClick={handleDeleteBoardClick}
+            handleEditBoardClick={handleEditBoardClick}
+          />
         </div>
       </header>
 
@@ -95,6 +92,9 @@ export function Header() {
           }}
           closePopup={handleDeleteBoardClick}
         />
+      )}
+      {isEditPopupOpen && board && (
+        <EditBoard closePopup={handleEditBoardClick} />
       )}
     </>
   )
