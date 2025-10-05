@@ -1,19 +1,20 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router'
-import { NewTask } from '~/components/board/NewTaskPopup'
+import { NewTask } from '~/components/task/NewTaskPopup'
 import { useBoards } from '~/context/UseBoards'
 import { useCurrentBoard } from '~/context/useCurrentBoard'
-import { DeletePopup } from './board/DeletePopup'
-import { EditBoardBox } from './EditBoardBox'
+import { DeletePopup } from './popups/DeletePopup'
+import { OptionsMenu } from './popups/OptionsMenuPopup'
 import { EditBoard } from './board/EditBoard'
+import { APIMethods } from '~/api/apiClient'
 
 export function Header() {
   const navigate = useNavigate()
   const [newTaskPopupOpen, setNewTaskPopupOpen] = useState<Boolean>(false)
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState<Boolean>(false)
   const [isEditPopupOpen, setIsEditPopupOpen] = useState<Boolean>(false)
-  const { isLoggedIn, deleteBoard } = useBoards()
+  const { isLoggedIn, deleteBoard: updateStateOnDelete } = useBoards()
   const { board } = useCurrentBoard()
 
   const handleAddNewTaskClick = () => {
@@ -33,6 +34,21 @@ export function Header() {
       return toast.error('Please select a board first')
     }
     setIsEditPopupOpen((prev) => !prev)
+  }
+
+  const deleteBoard = async () => {
+    try {
+      if (!board) return
+      await APIMethods.DeleteBoard(board.boardId)
+      updateStateOnDelete(board.boardId)
+      handleDeleteBoardClick()
+      toast.success('Board deleted successfully')
+      navigate('/')
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message || 'Something went wrong')
+      }
+    }
   }
   return (
     <>
@@ -59,7 +75,7 @@ export function Header() {
           >
             + Add New Task
           </button>
-          <EditBoardBox
+          <OptionsMenu
             handleDeleteBoardClick={handleDeleteBoardClick}
             handleEditBoardClick={handleEditBoardClick}
           />
@@ -70,26 +86,7 @@ export function Header() {
       {isDeletePopupOpen && board && (
         <DeletePopup
           board={{ boardName: board.name, id: board.boardId }}
-          deleteAction={async () => {
-            const response = await fetch(
-              `http://localhost:3000/board/${board.boardId}`,
-              {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              }
-            )
-            if (!response.ok) {
-              const errorResponse = await response.json()
-              toast.error(errorResponse.message || 'Something went wrong')
-            }
-            deleteBoard(board.boardId)
-            handleDeleteBoardClick()
-            toast.success('Board deleted successfully')
-            navigate('/')
-          }}
+          deleteAction={deleteBoard}
           closePopup={handleDeleteBoardClick}
         />
       )}

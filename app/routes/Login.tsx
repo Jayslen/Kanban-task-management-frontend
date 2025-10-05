@@ -1,46 +1,9 @@
-import { type FormEvent } from 'react'
 import logo from '@assets/logo-light.svg'
-import { useNavigate } from 'react-router'
-import { toast } from 'react-hot-toast'
 import '../inputStyles.css'
+import { useLoginUser } from '~/hooks/useLoginUser'
 
 export default function Login() {
-  const navigate = useNavigate()
-
-  const myPromise = async (formData: { [k: string]: FormDataEntryValue }) => {
-    const response = await fetch('http://localhost:3000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-      credentials: 'include',
-    })
-
-    if (!response.ok) {
-      const responseError = await response.json()
-      throw new Error(responseError.message)
-    }
-    const data = await response.json()
-    window.localStorage.setItem('user', JSON.stringify(data.username))
-    return data.username
-  }
-
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = Object.fromEntries(new FormData(e.currentTarget))
-
-    toast.promise(myPromise(formData), {
-      loading: 'Logging in...',
-      success: (data) => {
-        navigate('/')
-        return `Welcome back ${data}!`
-      },
-      error: (err) => {
-        return `${err.message}`
-      },
-    })
-  }
+  const { handleLogin } = useLoginUser()
   return (
     <>
       <header className="p-4 border-b-[0.5px] border-medium-grey/25">

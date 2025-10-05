@@ -6,9 +6,9 @@ export function TaskSelectInput({
   currentStatus,
   updateStatus,
 }: {
-  status: { name: string; id: number }[]
-  currentStatus: { name: string; id: number } | undefined
-  updateStatus: (status: { name: string; id: number }) => void
+  status: { name: string; id: string }[]
+  currentStatus: { name: string; id: string } | undefined
+  updateStatus: (status: { name: string; id: string }) => void
 }) {
   const inputElement = useRef<HTMLInputElement>(null)
   const inputId = useId()
@@ -96,7 +96,7 @@ export function TaskCheckbox({
 export function InputText({
   label,
   ...props
-}: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+}: { label?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className="w-full dark:text-white relative flex flex-col gap-2">
       <span className="heading-m">{label}</span>

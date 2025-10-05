@@ -7,13 +7,16 @@ import { Toggle } from './Toggle'
 import { NewBoardPopup } from './board/NewBoardPopup'
 import { useBoards } from '~/context/UseBoards'
 import toast from 'react-hot-toast'
+import { useCurrentBoard } from '~/context/useCurrentBoard'
 
 export function SideBar(props: { toggleSideBar: () => void }) {
   const { toggleSideBar } = props
   const [newBoardPopupOpen, setNewBoardPopupOpen] = useState(false)
   const { boards, isLoggedIn } = useBoards()
+  const { board } = useCurrentBoard()
 
   const handlePopup = () => {
+    if (!board) return toast.error('Please select a board first')
     setNewBoardPopupOpen((prev) => !prev)
   }
 

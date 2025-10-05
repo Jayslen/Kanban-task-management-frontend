@@ -1,4 +1,4 @@
-import { Popup } from '../PopupLayout'
+import { Popup } from './PopupLayout'
 
 export function DeletePopup(props: {
   closePopup: () => void

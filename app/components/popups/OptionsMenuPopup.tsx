@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef } from 'react'
 
-export function EditBoardBox({
+export function OptionsMenu({
   handleDeleteBoardClick,
   handleEditBoardClick,
 }: {

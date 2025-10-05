@@ -6,7 +6,7 @@ export interface Board {
 }
 
 export interface Column {
-    id: number;
+    id: string;
     name: string;
     tasks: Task[];
 }
@@ -15,12 +15,12 @@ export interface Task {
     id: string;
     name: string;
     description?: string;
-    column_id: number;
+    column_id: string;
     subtasks?: Subtask[];
 }
 
 export interface Subtask {
-    id: number;
+    id: string;
     name: string;
     isComplete: boolean;
     task_id: string;
@@ -31,4 +31,10 @@ export interface APIError {
     message: string;
     code: number;
     errors?: [string][];
+}
+
+export interface BoardResponse {
+    boardId: string;
+    name: string;
+    columns: Column[];
 }

@@ -5,11 +5,11 @@ interface CurrentBoard {
     board: Board | null
     setCurrentBoard: (board: Board | null) => void
     addTask: (task: Task) => void
-    updateTaskStatus: (taskId: string, newStatusId: number) => void
+    updateTaskStatus: (taskId: string, newStatusId: string) => void
     deleteTask: (taskId: string) => void
-    updateSubtaskStatus: (taskId: string, subtaskId: number, isComplete: boolean) => void
-    updatetask: (updatedTask: Partial<Task>) => void
-    updateBoardColumns: (boardId: string, columns: { id: number; name: string }[]) => void
+    updateSubtaskStatus: (taskId: string, subtaskId: string, isComplete: boolean) => void
+    updateTask: (updatedTask: Partial<Task>) => void
+    updateBoardColumns: (boardId: string, columns: { id: string; name: string }[]) => void
 }
 
 export const useCurrentBoard = create<CurrentBoard>((set) => ({
@@ -99,7 +99,7 @@ export const useCurrentBoard = create<CurrentBoard>((set) => ({
             board: { ...state.board, columns: updatedColumns }
         }
     }),
-    updatetask: (updatedTask) => set((state) => {
+    updateTask: (updatedTask) => set((state) => {
         if (!state.board) return state
         const updatedColumns = state.board.columns.map(col => ({
             ...col,

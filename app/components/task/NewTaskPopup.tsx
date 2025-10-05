@@ -1,69 +1,21 @@
-import { useState, type FormEvent } from 'react'
-import { Popup } from '../PopupLayout'
+import { useAddNewTask } from '~/hooks/useAddNewTask'
+import { Popup } from '../popups/PopupLayout'
 import { InputText, TaskSelectInput } from './TasksInputs'
-import { useCurrentBoard } from '~/context/useCurrentBoard'
-import { useIncreaseInputs } from '~/hooks/useIncreseInputs'
 import { IconCross } from '~/assets/IconCross'
-import { useTaskStatus } from '~/hooks/useTaskStatus'
-import type { Task } from '~/types/global'
-import toast from 'react-hot-toast'
 
 export function NewTask(props: { closePopup: () => void }) {
   const { closePopup } = props
-  const { board, addTask } = useCurrentBoard()
   const {
     inputs,
     inputContainerId,
     updateInputValue,
+    status,
+    statusSelected,
+    handleSubmit,
     addNewInput,
     deleteInput,
-  } = useIncreaseInputs()
-  const { status, statusSelected, updateStatus } = useTaskStatus()
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = Object.fromEntries(
-      new FormData(e.target as HTMLFormElement)
-    )
-    const taskInfo: {
-      name: string
-      status: number
-      subtasks: string[]
-      description?: string
-    } = {
-      name: formData.title as string,
-      status: statusSelected?.id as number,
-      subtasks: inputs.filter((subtask) => subtask.length > 0),
-    }
-
-    if (formData.description) {
-      taskInfo.description = formData.description as string
-    }
-
-    const response = await fetch(
-      `http://localhost:3000/board/${board?.boardId}/task`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(taskInfo),
-        credentials: 'include',
-      }
-    )
-    if (!response.ok) {
-      const errorData = await response.json()
-      console.error('Error creating task:', errorData)
-      console.log(errorData)
-      return
-    }
-
-    const newTask = (await response.json()) as Task
-    addTask(newTask)
-    toast.success('Task added successfully')
-    closePopup()
-  }
-
+    updateStatus,
+  } = useAddNewTask({ closePopup })
   return (
     <Popup closePopup={closePopup} height="675px">
       <header>
@@ -90,7 +42,7 @@ export function NewTask(props: { closePopup: () => void }) {
         </label>
         <div className="h-full custom-scrollbar" id={inputContainerId}>
           <h3 className="heading-m dark:text-white">Subtasks</h3>
-          {inputs.map((_, index) => (
+          {inputs.map((input, index) => (
             <div
               className="w-full flex items-center gap-4 relative"
               key={index}
@@ -105,7 +57,7 @@ export function NewTask(props: { closePopup: () => void }) {
               />
               <IconCross
                 className="text-[#828FA3] cursor-pointer hover:text-red"
-                onClick={() => deleteInput(index)}
+                onClick={() => deleteInput(input.id)}
               />
             </div>
           ))}

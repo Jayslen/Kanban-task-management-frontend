@@ -1,31 +1,20 @@
 import { useEffect, useState } from 'react'
 import { redirect } from 'react-router'
 import toast from 'react-hot-toast'
-import { BoardTask } from '~/components/board/BoardTask'
-import { TaskPopup } from '~/components/board/ViewTaskPopup'
+import { BoardTask } from '~/components/task/BoardTask'
+import { TaskPopup } from '~/components/task/ViewTaskPopup'
 import type { Task, Board } from '~/types/global'
 import type { Route } from './+types/Board'
 import { useCurrentBoard } from '~/context/useCurrentBoard'
+import { APIMethods } from '~/api/apiClient'
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
-  const response = await fetch(
-    `http://localhost:3000/board/${params.boardId}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    }
-  )
-  if (!response.ok) {
-    const responseError = await response.json()
-    toast.error(responseError.message || 'Failed to fetch boards')
+  try {
+    return await APIMethods.GetBoardById(params.boardId)
+  } catch (error) {
+    toast.error((error as Error).message || 'Failed to fetch board')
     return redirect('/')
   }
-
-  const board = (await response.json()) as Board
-  return board
 }
 
 export function HydrateFallback() {
@@ -76,9 +65,9 @@ export default function Board({ loaderData }: Route.ComponentProps) {
         }}
         className="grid gap-6 overflow-auto custom-scrollbar"
       >
-        {columns?.map(({ name, tasks }) => {
+        {columns?.map(({ id, name, tasks }) => {
           return (
-            <div>
+            <div key={id}>
               <header className="mb-4 flex items-center gap-2">
                 <div className="w-3.5 h-3.5 rounded-full"></div>
                 <h3 className="heading-s uppercase dark:text-medium-grey">{`${name} (${tasks.length})`}</h3>
@@ -87,6 +76,7 @@ export default function Board({ loaderData }: Route.ComponentProps) {
                 {tasks.map((task) => {
                   return (
                     <BoardTask
+                      key={task.id}
                       task={task}
                       updateTasksSelected={updateTasksSelected}
                     />

@@ -1,0 +1,28 @@
+import type { FormEvent } from "react"
+import toast from "react-hot-toast"
+import { useNavigate } from "react-router"
+import { APIMethods } from "~/api/apiClient"
+
+export function useLoginUser() {
+    const navigate = useNavigate()
+    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const formData = Object.fromEntries(new FormData(e.currentTarget))
+
+        toast.promise(
+            APIMethods.LoginUser(formData as { username: string; password: string }),
+            {
+                loading: 'Logging in...',
+                success: (username) => {
+                    navigate('/')
+                    window.localStorage.setItem('user', JSON.stringify(username))
+                    return `Welcome back, ${username}`
+                },
+                error: (err) => {
+                    return `${err.message || 'Login failed'}`
+                },
+            }
+        )
+    }
+    return { handleLogin }
+}

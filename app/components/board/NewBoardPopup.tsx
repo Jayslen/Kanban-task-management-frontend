@@ -2,11 +2,11 @@ import { type FormEvent } from 'react'
 import toast from 'react-hot-toast'
 import { useBoards } from '~/context/UseBoards'
 import { useIncreaseInputs } from '~/hooks/useIncreseInputs'
-import { Popup } from '../PopupLayout'
-import { InputText } from './TasksInputs'
-import type { Board } from '~/types/global'
+import { Popup } from '../popups/PopupLayout'
+import { InputText } from '../task/TasksInputs'
 import { IconCross } from '@assets/IconCross'
 import '../../inputStyles.css'
+import { APIMethods } from '~/api/apiClient'
 
 export function NewBoardPopup(props: { closePopup: () => void }) {
   const { closePopup } = props
@@ -24,28 +24,20 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
     const [boardName, ...boardColumns] = Object.values(
       Object.fromEntries(new FormData(e.target as HTMLFormElement))
     )
-    const newBoardInfo = { name: boardName, columns: boardColumns }
-
-    const response = await fetch('http://localhost:3000/board', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newBoardInfo),
-      credentials: 'include',
-    })
-
-    if (!response.ok) {
-      const errorData = await response.json()
-      console.error('Error creating board:', errorData)
-      toast.error(`Error: ${errorData.message || 'Could not create board'}`)
-      return
+    const newBoardInfo = {
+      name: boardName as string,
+      columns: boardColumns as string[],
     }
 
-    const data = (await response.json()) as Board
-    newBoard(data)
-    toast.success('Board created successfully')
-    closePopup()
+    try {
+      const response = await APIMethods.CreateBoard(newBoardInfo)
+      newBoard(response)
+      toast.success('Board created successfully')
+      closePopup()
+    } catch (error) {
+      console.error('Error creating board:', error)
+      toast.error(`${(error as Error).message || 'Could not create board'}`)
+    }
   }
 
   return (
@@ -64,14 +56,13 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
           id={inputContainerId}
         >
           <h3 className="heading-m dark:text-white">Columns</h3>
-          {inputs.map((_, index) => (
+          {inputs.map((col, index) => (
             <div
               className="w-full flex items-center gap-4 relative"
               key={index}
             >
               <InputText
-                label=""
-                placeholder=""
+                placeholder="e.g. Todo"
                 required
                 name={`column-${index}`}
                 minLength={4}
@@ -80,7 +71,7 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
               />
               <IconCross
                 className="text-[#828FA3] cursor-pointer hover:text-red"
-                onClick={() => deleteInput(index)}
+                onClick={() => deleteInput(col.id)}
               />
             </div>
           ))}
