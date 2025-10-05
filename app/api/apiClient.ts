@@ -46,7 +46,7 @@ export class APIMethods {
         return await response.json() as Board
     }
 
-    static async CreateTask(input: { boardId: string, requestBody: { name: string, description?: string, status: number, subtasks: string[] } }) {
+    static async CreateTask(input: { boardId: string, requestBody: { name: string, description?: string, status: string, subtasks: string[] } }) {
         const { boardId, requestBody } = input
         const response = await fetch(`${API_URL}board/${boardId}/task`, HEADERS_OPTIONS({ method: Method.POST, body: JSON.stringify(requestBody) }))
 
@@ -58,7 +58,7 @@ export class APIMethods {
         return newTask
     }
 
-    static async EditTask(input: { boardId: string, taskId: string, requestBody: { name?: string, description?: string, status?: number, subtasks?: ({ name: string, id?: number } | { id: number })[] } }): Promise<Partial<Task>> {
+    static async EditTask(input: { boardId: string, taskId: string, requestBody: { name?: string, description?: string, status?: string, subtasks?: ({ name: string } | { name: string, id: string } | { id: string })[] } }): Promise<Partial<Task>> {
         const { boardId, taskId, requestBody } = input
         const response = await fetch(`${API_URL}board/${boardId}/task/${taskId}`, HEADERS_OPTIONS({ method: Method.PATCH, body: JSON.stringify(requestBody) }))
 
@@ -80,7 +80,7 @@ export class APIMethods {
         }
     }
 
-    static async updateSubtaskStatus(input: { boardId: string, taskId: string, requestBody: { subtaskId: number, isCompleted: boolean } }): Promise<void> {
+    static async updateSubtaskStatus(input: { boardId: string, taskId: string, requestBody: { subtaskId: string, isCompleted: boolean } }): Promise<void> {
         const { boardId, taskId, requestBody } = input
         const response = await fetch(`${API_URL}board/${boardId}/task/${taskId}/subtask`, HEADERS_OPTIONS({ method: Method.PATCH, body: JSON.stringify(requestBody) }))
 
@@ -100,7 +100,7 @@ export class APIMethods {
         return await response.json() as Board
     }
 
-    static async EditBoard(input: { boardId: string, requestBody: { name?: string, columns?: { add?: string[], edit?: { id: number, payload?: string, remove?: boolean }[] } } }): Promise<BoardResponse> {
+    static async EditBoard(input: { boardId: string, requestBody: { name?: string, columns?: ({ name: string } | { name: string, id: string } | { id: string })[] } }): Promise<BoardResponse> {
         const { boardId, requestBody } = input
         const response = await fetch(`${API_URL}board/${boardId}`, HEADERS_OPTIONS({ method: Method.PATCH, body: JSON.stringify(requestBody) }))
 
@@ -109,5 +109,13 @@ export class APIMethods {
             throw new Error(responseError.message || 'Failed to edit board')
         }
         return await response.json() as BoardResponse
+    }
+
+    static async DeleteBoard(boardId: string): Promise<void> {
+        const response = await fetch(`${API_URL}board/${boardId}`, HEADERS_OPTIONS({ method: Method.DELETE }))
+        if (!response.ok) {
+            const responseError = await response.json()
+            throw new Error(responseError.message)
+        }
     }
 }
