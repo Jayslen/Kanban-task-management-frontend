@@ -13,10 +13,10 @@ export function TaskSelectInput({
   const inputElement = useRef<HTMLInputElement>(null)
   const inputId = useId()
   return (
-    <div className="h-10 border border-medium-grey/25 rounded-sm relative">
+    <div className="border-medium-grey/25 relative h-10 rounded-sm border">
       <label
         htmlFor={inputId}
-        className="flex justify-between items-center h-full px-4 typo-body-l dark:text-white cursor-pointer"
+        className="typo-body-l flex h-full cursor-pointer items-center justify-between px-4 dark:text-white"
       >
         {currentStatus?.name}
         <img src={ArrowDown} alt="Arrow down icon" />
@@ -27,10 +27,10 @@ export function TaskSelectInput({
         ref={inputElement}
         name="task-status"
         id={inputId}
-        className="hidden peer "
+        className="peer hidden"
       />
 
-      <ul className="hidden peer-checked:flex flex-col gap-2 typo-body-m p-4 rounded-lg dark:bg-very-dark-grey-dark-bg dark:text-medium-grey mt-1.5 cursor-pointer z-20 w-full">
+      <ul className="typo-body-m dark:bg-very-dark-grey-dark-bg dark:text-medium-grey z-20 mt-1.5 hidden w-full cursor-pointer flex-col gap-2 rounded-lg p-4 peer-checked:flex">
         {status.map(({ name, id }) => {
           return (
             <li
@@ -62,7 +62,7 @@ export function TaskCheckbox({
   update: (e: ChangeEvent<HTMLInputElement>) => void
 }) {
   return (
-    <label className="min-h-10 rounded-md p-3.5 dark:bg-very-dark-grey-dark-bg grid grid-cols-[auto_1fr] items-center gap-2 cursor-pointer">
+    <label className="dark:bg-very-dark-grey-dark-bg dark:hover:bg-main-purple/15 grid min-h-10 cursor-pointer grid-cols-[auto_1fr] items-center gap-2 rounded-md p-3.5">
       <input
         type="checkbox"
         defaultChecked={isComplete}
@@ -71,7 +71,7 @@ export function TaskCheckbox({
         className="peer hidden"
         onChange={(e) => update(e)}
       />
-      <div className="w-4 h-4 rounded-[2px] grid place-content-center text-transparent border border-medium-grey bg-dark-grey peer-checked:bg-main-purple peer-checked:text-white peer-checked:border-0">
+      <div className="border-medium-grey bg-dark-grey peer-checked:bg-main-purple grid h-4 w-4 place-content-center rounded-[2px] border text-transparent peer-checked:border-0 peer-checked:text-white">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"
@@ -86,7 +86,7 @@ export function TaskCheckbox({
           />
         </svg>
       </div>
-      <span className="heading-s dark:text-white dark:peer-checked:text-medium-grey peer-checked:line-through">
+      <span className="heading-s dark:peer-checked:text-medium-grey peer-checked:line-through dark:text-white">
         {taskTitle}
       </span>
     </label>
@@ -98,12 +98,12 @@ export function InputText({
   ...props
 }: { label?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <label className="w-full dark:text-white relative flex flex-col gap-2">
+    <label className="relative flex w-full flex-col gap-2 dark:text-white">
       <span className="heading-m">{label}</span>
       <input
         type="text"
         {...props}
-        className="outline text-sm outline-medium-grey/25 rounded-sm h-10 p-4 text-white/85 block grow w-full"
+        className="outline-medium-grey/25 block h-10 w-full grow rounded-sm p-4 text-sm text-white/85 outline"
       />
     </label>
   )

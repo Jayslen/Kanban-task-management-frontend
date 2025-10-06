@@ -1,85 +1,65 @@
-import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 import { NewTask } from '~/components/task/NewTaskPopup'
-import { useBoards } from '~/context/UseBoards'
-import { useCurrentBoard } from '~/context/useCurrentBoard'
 import { DeletePopup } from './popups/DeletePopup'
 import { OptionsMenu } from './popups/OptionsMenuPopup'
+import { DropdownMenuMobile } from './popups/DropdownMenuMobile'
 import { EditBoard } from './board/EditBoard'
-import { APIMethods } from '~/api/apiClient'
+import { useHeader } from '~/hooks/useheader'
+import MobileLogo from '@assets/logo-mobile.svg'
 
 export function Header() {
-  const navigate = useNavigate()
-  const [newTaskPopupOpen, setNewTaskPopupOpen] = useState<Boolean>(false)
-  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState<Boolean>(false)
-  const [isEditPopupOpen, setIsEditPopupOpen] = useState<Boolean>(false)
-  const { isLoggedIn, deleteBoard: updateStateOnDelete } = useBoards()
-  const { board } = useCurrentBoard()
+  const {
+    board,
+    boards,
+    isLoggedIn,
+    newTaskPopupOpen,
+    isDeletePopupOpen,
+    isEditPopupOpen,
+    handleAddNewTaskClick,
+    handleDeleteBoardClick,
+    handleEditBoardClick,
+    deleteBoard,
+  } = useHeader()
 
-  const handleAddNewTaskClick = () => {
-    if (!board) {
-      return toast.error('Please select a board first')
-    }
-    setNewTaskPopupOpen((prev) => !prev)
-  }
-  const handleDeleteBoardClick = () => {
-    if (!board) {
-      return toast.error('Please select a board first')
-    }
-    setIsDeletePopupOpen((prev) => !prev)
-  }
-  const handleEditBoardClick = () => {
-    if (!board) {
-      return toast.error('Please select a board first')
-    }
-    setIsEditPopupOpen((prev) => !prev)
-  }
-
-  const deleteBoard = async () => {
-    try {
-      if (!board) return
-      await APIMethods.DeleteBoard(board.boardId)
-      updateStateOnDelete(board.boardId)
-      handleDeleteBoardClick()
-      toast.success('Board deleted successfully')
-      navigate('/')
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message || 'Something went wrong')
-      }
-    }
-  }
   return (
     <>
-      <header className="flex justify-between items-center dark:bg-dark-grey dark:text-white p-4 [grid-area:header] w-full">
-        <h1 className="heading-xl">Platform Launch</h1>
-        <div className="flex gap-6 items-center">
+      <header className="dark:bg-dark-grey flex w-full items-center justify-between p-4 [grid-area:header] dark:text-white">
+        <div className="flex gap-2">
+          <img
+            src={MobileLogo}
+            alt="App logo for mobile"
+            className="sm:hidden"
+          />
+          <h1 className="heading-xl">Platform Launch</h1>
+          <DropdownMenuMobile boards={boards || []} />
+        </div>
+
+        <nav className="flex items-center gap-6">
           {!isLoggedIn && (
             <Link
               to="/login"
-              className="secondary-btn w-28 grid place-items-center"
+              className="secondary-btn grid w-28 place-items-center"
             >
               Login{' '}
             </Link>
           )}
           <button
-            className="primary-btn-l w-40 heading-m text-white"
-            onClick={() => {
-              if (!board) {
-                toast.error('Please select a board first')
-                return
-              }
-              handleAddNewTaskClick()
-            }}
+            className="primary-btn-l heading-m flex w-12 items-center justify-center gap-2 text-white md:w-40"
+            onClick={handleAddNewTaskClick}
           >
-            + Add New Task
+            <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill="#FFF"
+                d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
+              />
+            </svg>
+            <span className="hidden md:block">Add New Task</span>
           </button>
           <OptionsMenu
             handleDeleteBoardClick={handleDeleteBoardClick}
             handleEditBoardClick={handleEditBoardClick}
           />
-        </div>
+        </nav>
       </header>
 
       {newTaskPopupOpen && <NewTask closePopup={handleAddNewTaskClick} />}

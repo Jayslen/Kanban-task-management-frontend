@@ -11,7 +11,7 @@ export default function Login() {
           <img src={logo} alt="Logo kaban" />
         </a>
       </header>
-      <main className="font-plus-jakarta-sans w-full flex justify-center">
+      <main className="w-full flex justify-center">
         <section className="w-[400px] p-6">
           <h1 className="dark:text-white font-bold text-3xl">Login</h1>
           <p className="dark:text-white">Hi, welcome back</p>

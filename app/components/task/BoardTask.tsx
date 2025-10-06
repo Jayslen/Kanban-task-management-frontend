@@ -12,10 +12,10 @@ export function BoardTask({
   ).length
   return (
     <li
-      className="flex flex-col justify-center gap-1 w-full min-h-20 rounded-lg p-4 cursor-pointer dark:bg-dark-grey transition-colors group"
+      className="flex flex-col justify-center gap-1 w-full min-h-20 rounded-lg p-4 cursor-pointer dark:bg-dark-grey group"
       onClick={() => updateTasksSelected(task)}
     >
-      <h3 className="dark:text-white heading-m group-hover:dark:hover:text-main-purple ">
+      <h3 className="dark:text-white heading-m dark:group-hover:text-main-purple transition-colors">
         {task.name}
       </h3>
       <p className="typo-body-b dark:text-medium-grey">{`${completedSubtasks} of ${task?.subtasks?.length} substasks`}</p>

@@ -48,13 +48,13 @@ export function EditTask({
             placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
             minLength={8}
             maxLength={150}
-            className="outline outline-medium-grey/25 rounded-sm p-4 text-white/85 block grow w-full mt-2 min-h-28 field-sizing-content resize-none"
+            className="outline-medium-grey/25 mt-2 block field-sizing-content min-h-28 w-full grow resize-none rounded-sm p-4 text-white/85 outline"
           ></textarea>
         </label>
-        <div className="h-full custom-scrollbar" id={inputContainerId}>
+        <div className="custom-scrollbar h-full" id={inputContainerId}>
           <h3 className="heading-m dark:text-white">Subtasks</h3>
           {inputs.map((subtask, index) => (
-            <div className="w-full flex items-center gap-4 relative">
+            <div className="relative flex w-full items-center gap-4">
               <InputText
                 label=""
                 key={subtask.id}
@@ -69,7 +69,7 @@ export function EditTask({
                 }}
               />
               <IconCross
-                className="text-[#828FA3] cursor-pointer hover:text-red"
+                className="hover:text-red cursor-pointer text-[#828FA3]"
                 onClick={() => {
                   removeSubtask(subtask)
                 }}
@@ -77,7 +77,7 @@ export function EditTask({
             </div>
           ))}
           <button
-            className="secondary-btn w-full mt-2"
+            className="secondary-btn mt-2 w-full"
             type="button"
             onClick={addNewInput}
           >

@@ -28,7 +28,7 @@ export function OptionsMenu({
     <>
       <label
         htmlFor={inputId}
-        className="group cursor-pointer fill-[#828FA3] hover:fill-main-purple transition-colors block h-full"
+        className="group hover:fill-main-purple block h-full cursor-pointer fill-[#828FA3] transition-colors"
       >
         <svg
           width="5"
@@ -49,16 +49,16 @@ export function OptionsMenu({
         className="peer"
         hidden
       />
-      <div className="absolute bg-very-dark-grey-dark-bg rounded-md right-0 top-8 p-4 hidden text-sm peer-checked:flex flex-col gap-3 w-48">
+      <div className="bg-very-dark-grey-dark-bg absolute top-8 right-0 hidden w-48 flex-col gap-3 rounded-md p-4 text-sm peer-checked:flex">
         <span
           onClick={handleEditBoardClick}
-          className="text-medium-grey cursor-pointer hover:text-main-purple"
+          className="text-medium-grey hover:text-main-purple cursor-pointer"
         >
           Edit board
         </span>
         <span
           onClick={handleDeleteBoardClick}
-          className="text-red cursor-pointer hover:text-red/60"
+          className="text-red hover:text-red/60 cursor-pointer"
         >
           Delete board
         </span>

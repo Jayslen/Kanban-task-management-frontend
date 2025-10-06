@@ -34,8 +34,8 @@ export function TaskPopup({
   return (
     <>
       <Popup closePopup={closePopup}>
-        <header className="flex justify-between relative">
-          <h2 className="dark:text-white heading-l">{name}</h2>
+        <header className="relative flex justify-between">
+          <h2 className="heading-l dark:text-white">{name}</h2>
           <OptionsMenu
             handleDeleteBoardClick={handleDeleteBoardClick}
             handleEditBoardClick={handleEditBoardClick}
@@ -45,8 +45,8 @@ export function TaskPopup({
           {description || 'No description provided.'}
         </p>
 
-        <div className="grow h-24 overflow-auto custom-scrollbar">
-          <h3 className="heading-s dark:text-white mb-4">
+        <div className="custom-scrollbar h-24 grow overflow-auto">
+          <h3 className="heading-s mb-4 dark:text-white">
             Subtasks {`(${completedSubtasks} of ${subtasks?.length})`}
           </h3>
           <ul className="flex flex-col gap-3">
@@ -64,7 +64,7 @@ export function TaskPopup({
         </div>
 
         <footer>
-          <h3 className="heading-s dark:text-white mb-2">Current status</h3>
+          <h3 className="heading-s mb-2 dark:text-white">Current status</h3>
           <TaskSelectInput
             status={status}
             currentStatus={statusSelected}

@@ -26,13 +26,13 @@ export function EditBoard({ closePopup }: { closePopup: () => void }) {
           defaultValue={boardName}
         />
         <div
-          className=" flex flex-col gap-2 grow h-full custom-scrollbar"
+          className="custom-scrollbar flex h-full grow flex-col gap-2"
           id={inputContainerId}
         >
           <h3 className="heading-m dark:text-white">Columns</h3>
           {inputs.map((col, index) => (
             <div
-              className="w-full flex items-center gap-4 relative"
+              className="relative flex w-full items-center gap-4"
               key={col.id}
             >
               <InputText
@@ -46,13 +46,13 @@ export function EditBoard({ closePopup }: { closePopup: () => void }) {
                 }}
               />
               <IconCross
-                className="text-[#828FA3] cursor-pointer hover:text-red"
+                className="hover:text-red cursor-pointer text-[#828FA3]"
                 onClick={() => handleDeleteColumn(col)}
               />
             </div>
           ))}
           <button
-            className="secondary-btn w-full mt-2"
+            className="secondary-btn mt-2 w-full"
             type="button"
             onClick={addNewInput}
           >

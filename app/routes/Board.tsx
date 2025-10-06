@@ -57,7 +57,7 @@ export default function Board({ loaderData }: Route.ComponentProps) {
   const columnsCount = columns?.length ? columns.length + 1 : 1
   const status = columns?.map((col) => ({ name: col.name, id: col.id })) || []
   return (
-    <section className="font-plus-jakarta-sans grid p-6 h-full w-full">
+    <section className="min-h-[90dvh] grid p-6 h-full w-full">
       <div
         style={{
           gridTemplateColumns: `repeat(${columnsCount}, 280px)`,

@@ -21,18 +21,22 @@
 
 body {
   @apply dark:bg-very-dark-grey-dark-bg bg-white h-screen;
+  font-family: var(--font-plus-jakarta-sans);
 }
 
-.board-layout {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      'sidebar header'
-      'sidebar content';
-    width: 100vw;
-    height: 100vh;
-}
+
+@media (width >= 768px) {
+  .board-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        'sidebar header'
+        'sidebar content';
+      width: 100vw;
+      height: 100vh;
+  }
+} 
 
 @layer components {
   .heading-xl {
