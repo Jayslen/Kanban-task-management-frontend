@@ -6,7 +6,10 @@ import { useBoards } from "~/context/UseBoards"
 export function useGetAllBoards() {
     const { addBoards } = useBoards()
     const [isSidebarOpen, setIsSidebarOpen] = useState<Boolean>(true)
-    const toggleSidebarMenu = () => setIsSidebarOpen((prev) => !prev)
+    const toggleSidebarMenu = () => {
+        setIsSidebarOpen((prev) => !prev)
+        document.body.classList.toggle('board-layout')
+    }
 
     useEffect(() => {
         document.body.classList.add('board-layout')
