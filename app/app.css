@@ -19,6 +19,8 @@
   --font-plus-jakarta-sans: 'Plus Jakarta Sans', sans-serif;
 }
 
+/* @custom-variant dark (&:where(.dark, .dark *)); */
+
 body {
   @apply dark:bg-very-dark-grey-dark-bg bg-white h-screen;
   font-family: var(--font-plus-jakarta-sans);
@@ -64,19 +66,19 @@ body {
   }
 
   .primary-btn-l {
-    @apply w-64 h-10 rounded-3xl dark:bg-main-purple dark:hover:bg-main-purple-hover dark:text-white text-[px] font-bold transition-colors duration-200 ease-in-out cursor-pointer;
+    @apply w-64 h-10 rounded-3xl bg-main-purple text-white hover:bg-main-purple-hover dark:text-white  font-bold transition-colors duration-200 ease-in-out cursor-pointer;
   }
 
   .primary-btn-m {
-    @apply w-65 h-10 rounded-3xl dark:bg-main-purple dark:hover:bg-main-purple-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out cursor-pointer;
+    @apply w-65 h-10 rounded-3xl bg-main-purple hover:bg-main-purple-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out cursor-pointer;
   }
 
   .secondary-btn {
-    @apply w-64 h-10 rounded-3xl dark:bg-white dark:hover:bg-white/75 dark:text-main-purple text-[13px] font-bold cursor-pointer transition-colors duration-200 ease-in-out;
+    @apply w-64 h-10 rounded-3xl dark:bg-white bg-[rgba(99,95,199,0.10)] hover:bg-[rgba(99,95,199,0.25)] dark:hover:bg-white/75 text-main-purple text-[13px] font-bold cursor-pointer transition-colors duration-200 ease-in-out;
   }
 
   .delete-btn {
-    @apply w-64 h-10 rounded-3xl dark:bg-red dark:hover:bg-red-hover dark:text-white text-[13px] font-bold transition-colors duration-200 ease-in-out cursor-pointer;
+    @apply w-64 h-10 rounded-3xl bg-red hover:bg-red-hover text-white text-[13px] font-bold transition-colors duration-200 ease-in-out cursor-pointer;
   }
 
   .custom-scrollbar {

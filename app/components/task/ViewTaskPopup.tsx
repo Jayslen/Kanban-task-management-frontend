@@ -41,12 +41,12 @@ export function TaskPopup({
             handleEditBoardClick={handleEditBoardClick}
           />
         </header>
-        <p className="typo-body-m dark:text-white">
+        <p className="typo-body-m text-medium-grey dark:text-white">
           {description || 'No description provided.'}
         </p>
 
         <div className="custom-scrollbar h-24 grow overflow-auto">
-          <h3 className="heading-s mb-4 dark:text-white">
+          <h3 className="heading-s text-medium-grey mb-4 dark:text-white">
             Subtasks {`(${completedSubtasks} of ${subtasks?.length})`}
           </h3>
           <ul className="flex flex-col gap-3">

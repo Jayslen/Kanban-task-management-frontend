@@ -23,7 +23,7 @@ export function Header() {
 
   return (
     <>
-      <header className="dark:bg-dark-grey flex w-full items-center justify-between p-4 [grid-area:header] dark:text-white">
+      <header className="dark:bg-dark-grey flex w-full items-center justify-between border-[1px] border-[#E4EBFA] p-4 [grid-area:header] dark:border-0 dark:text-white">
         <div className="flex gap-2">
           <img
             src={MobileLogo}

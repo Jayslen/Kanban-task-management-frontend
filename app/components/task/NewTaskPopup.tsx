@@ -31,17 +31,21 @@ export function NewTask(props: { closePopup: () => void }) {
           maxLength={40}
         />
         <label className="text-white/75">
-          <span className="heading-m">Description</span>
+          <span className="heading-m text-medium-grey dark:text-white/85">
+            Description
+          </span>
           <textarea
             name="description"
             placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
             minLength={8}
             maxLength={150}
-            className="outline-medium-grey/25 mt-2 block field-sizing-content min-h-28 w-full grow resize-none rounded-sm p-4 text-white/85 outline"
+            className="outline-medium-grey/25 mt-2 block field-sizing-content min-h-28 w-full grow resize-none rounded-sm p-4 text-sm text-[#000112] outline dark:text-white/85"
           ></textarea>
         </label>
         <div className="custom-scrollbar h-full" id={inputContainerId}>
-          <h3 className="heading-m dark:text-white">Subtasks</h3>
+          <h3 className="heading-m text-medium-grey dark:text-white">
+            Subtasks
+          </h3>
           {inputs.map((input, index) => (
             <div
               className="relative flex w-full items-center gap-4"
@@ -71,7 +75,9 @@ export function NewTask(props: { closePopup: () => void }) {
         </div>
 
         <div>
-          <label className="heading-m dark:text-white">Status</label>
+          <label className="heading-m text-medium-grey dark:text-white">
+            Status
+          </label>
           <TaskSelectInput
             status={status}
             updateStatus={updateStatus}

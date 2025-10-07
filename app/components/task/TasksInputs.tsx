@@ -16,7 +16,7 @@ export function TaskSelectInput({
     <div className="border-medium-grey/25 relative h-10 rounded-sm border">
       <label
         htmlFor={inputId}
-        className="typo-body-l flex h-full cursor-pointer items-center justify-between px-4 dark:text-white"
+        className="typo-body-l flex h-full cursor-pointer items-center justify-between px-4 text-[#000112] dark:text-white"
       >
         {currentStatus?.name}
         <img src={ArrowDown} alt="Arrow down icon" />
@@ -62,7 +62,7 @@ export function TaskCheckbox({
   update: (e: ChangeEvent<HTMLInputElement>) => void
 }) {
   return (
-    <label className="dark:bg-very-dark-grey-dark-bg dark:hover:bg-main-purple/15 grid min-h-10 cursor-pointer grid-cols-[auto_1fr] items-center gap-2 rounded-md p-3.5">
+    <label className="dark:bg-very-dark-grey-dark-bg bg-light-grey-light-bg hover:bg-main-purple/15 grid min-h-10 cursor-pointer grid-cols-[auto_1fr] items-center gap-2 rounded-md p-3.5 transition-colors">
       <input
         type="checkbox"
         defaultChecked={isComplete}
@@ -71,7 +71,7 @@ export function TaskCheckbox({
         className="peer hidden"
         onChange={(e) => update(e)}
       />
-      <div className="border-medium-grey bg-dark-grey peer-checked:bg-main-purple grid h-4 w-4 place-content-center rounded-[2px] border text-transparent peer-checked:border-0 peer-checked:text-white">
+      <div className="border-medium-grey dark:bg-dark-grey peer-checked:bg-main-purple grid h-4 w-4 place-content-center rounded-[2px] border text-transparent peer-checked:border-0 peer-checked:text-white">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"
@@ -86,7 +86,7 @@ export function TaskCheckbox({
           />
         </svg>
       </div>
-      <span className="heading-s dark:peer-checked:text-medium-grey peer-checked:line-through dark:text-white">
+      <span className="heading-s dark:peer-checked:text-medium-grey peer-checked:text-medium-grey peer-checked:line-through dark:text-white">
         {taskTitle}
       </span>
     </label>
@@ -98,12 +98,12 @@ export function InputText({
   ...props
 }: { label?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <label className="relative flex w-full flex-col gap-2 dark:text-white">
+    <label className="text-medium-grey relative flex w-full flex-col gap-2 dark:text-white">
       <span className="heading-m">{label}</span>
       <input
         type="text"
         {...props}
-        className="outline-medium-grey/25 block h-10 w-full grow rounded-sm p-4 text-sm text-white/85 outline"
+        className="outline-medium-grey/25 block h-10 w-full grow rounded-sm p-4 text-sm text-[#000112] outline dark:text-white/85"
       />
     </label>
   )

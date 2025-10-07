@@ -49,7 +49,7 @@ export function OptionsMenu({
         className="peer"
         hidden
       />
-      <div className="bg-very-dark-grey-dark-bg absolute top-8 right-0 hidden w-48 flex-col gap-3 rounded-md p-4 text-sm peer-checked:flex">
+      <div className="dark:bg-very-dark-grey-dark-bg absolute top-8 right-0 hidden w-48 flex-col gap-3 rounded-md bg-white p-4 text-sm peer-checked:flex">
         <span
           onClick={handleEditBoardClick}
           className="text-medium-grey hover:text-main-purple cursor-pointer"

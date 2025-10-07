@@ -57,20 +57,20 @@ export default function Board({ loaderData }: Route.ComponentProps) {
   const columnsCount = columns?.length ? columns.length + 1 : 1
   const status = columns?.map((col) => ({ name: col.name, id: col.id })) || []
   return (
-    <section className="min-h-[90dvh] grid p-6 h-full w-full">
+    <section className="dark:bg-very-dark-grey-dark-bg bg-light-grey-light-bg grid h-full min-h-[90dvh] w-full p-6">
       <div
         style={{
           gridTemplateColumns: `repeat(${columnsCount}, 280px)`,
           gridAutoRows: 'min-content',
         }}
-        className="grid gap-6 overflow-auto custom-scrollbar"
+        className="custom-scrollbar grid gap-6 overflow-auto"
       >
         {columns?.map(({ id, name, tasks }) => {
           return (
             <div key={id}>
               <header className="mb-4 flex items-center gap-2">
-                <div className="w-3.5 h-3.5 rounded-full"></div>
-                <h3 className="heading-s uppercase dark:text-medium-grey">{`${name} (${tasks.length})`}</h3>
+                <div className="h-3.5 w-3.5 rounded-full"></div>
+                <h3 className="heading-s text-medium-grey uppercase">{`${name} (${tasks.length})`}</h3>
               </header>
               <ul key={name} className="flex flex-col gap-5">
                 {tasks.map((task) => {

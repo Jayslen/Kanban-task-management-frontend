@@ -12,13 +12,13 @@ export function BoardTask({
   ).length
   return (
     <li
-      className="flex flex-col justify-center gap-1 w-full min-h-20 rounded-lg p-4 cursor-pointer dark:bg-dark-grey group"
+      className="dark:bg-dark-grey group flex min-h-20 w-full cursor-pointer flex-col justify-center gap-1 rounded-lg bg-white p-4 shadow-md"
       onClick={() => updateTasksSelected(task)}
     >
-      <h3 className="dark:text-white heading-m dark:group-hover:text-main-purple transition-colors">
+      <h3 className="heading-m dark:group-hover:text-main-purple transition-colors dark:text-white">
         {task.name}
       </h3>
-      <p className="typo-body-b dark:text-medium-grey">{`${completedSubtasks} of ${task?.subtasks?.length} substasks`}</p>
+      <p className="typo-body-b text-medium-grey">{`${completedSubtasks} of ${task?.subtasks?.length} substasks`}</p>
     </li>
   )
 }

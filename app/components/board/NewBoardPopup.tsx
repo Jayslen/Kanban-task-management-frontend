@@ -55,7 +55,9 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
           className="custom-scrollbar flex h-full grow flex-col gap-2"
           id={inputContainerId}
         >
-          <h3 className="heading-m dark:text-white">Columns</h3>
+          <h3 className="heading-m text-medium-grey dark:text-white">
+            Columns
+          </h3>
           {inputs.map((col, index) => (
             <div
               className="relative flex w-full items-center gap-4"

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router'
-import LogoSvg from '@assets/logo-light.svg'
+import LightModeLogo from '@assets/logo-light.svg'
+import DarkModeLogo from '@assets/logo-dark.svg'
 import { BoardIcon } from '@assets/BoardIcon'
 import HideSideBarIcon from '@assets/icon-hide-sidebar.svg'
 import { ToggleTheme } from './ToggleTheme'
@@ -22,10 +23,19 @@ export function SideBar(props: { toggleSideBar: () => void }) {
   return (
     <>
       {newBoardPopupOpen && <NewBoardPopup closePopup={() => handlePopup()} />}
-      <aside className="dark:bg-dark-grey hidden h-screen w-[300px] grid-rows-[auto_1fr_auto] [grid-area:sidebar] md:grid">
+      <aside className="dark:bg-dark-grey hidden h-screen w-[300px] grid-rows-[auto_1fr_auto] border-r-[1px] border-[#E4EBFA] bg-white [grid-area:sidebar] md:grid dark:border-0">
         <header className="mb-[54px] px-6 pt-6">
           <NavLink to="/">
-            <img src={LogoSvg} alt="Logo kaban" />
+            <img
+              src={LightModeLogo}
+              alt="Logo kaban"
+              className="hidden dark:block"
+            />
+            <img
+              src={DarkModeLogo}
+              alt="Logo kaban"
+              className="block dark:hidden"
+            />
           </NavLink>
         </header>
 
@@ -64,7 +74,7 @@ export function SideBar(props: { toggleSideBar: () => void }) {
         <footer className="flex flex-col gap-5">
           <ToggleTheme />
           <button
-            className="hover:dark:text-main-purple mb-6 flex h-12 w-[276px] cursor-pointer items-center gap-3 rounded-r-full px-6 transition-colors duration-300 hover:dark:bg-white"
+            className="dark:hover:text-main-purple hover:bg-main-purple/20 mb-6 flex h-12 w-[276px] cursor-pointer items-center gap-3 rounded-r-full px-6 transition-colors duration-300 dark:hover:bg-white"
             onClick={toggleSideBar}
           >
             <img src={HideSideBarIcon} alt="" />
