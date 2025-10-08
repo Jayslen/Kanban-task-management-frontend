@@ -26,6 +26,14 @@ export class APIMethods {
         return user.username
     }
 
+    static async LogoutUser(): Promise<void> {
+        const response = await fetch(`${API_URL}logout`, HEADERS_OPTIONS({ method: Method.POST }))
+        if (!response.ok) {
+            const responseError = await response.json()
+            throw new Error(responseError.message)
+        }
+    }
+
     static async GetBoards() {
         const response = await fetch(`${API_URL}board`, HEADERS_OPTIONS())
 

@@ -12,7 +12,6 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   try {
     return await APIMethods.GetBoardById(params.boardId)
   } catch (error) {
-    toast.error((error as Error).message || 'Failed to fetch board')
     return redirect('/')
   }
 }

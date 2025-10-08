@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import toast from "react-hot-toast"
 import { APIMethods } from "~/api/apiClient"
 import { useBoards } from "~/context/UseBoards"
 
@@ -25,7 +24,6 @@ export function useGetAllBoards() {
                 addBoards(boards)
             } catch (error) {
                 console.error((error as Error).message || 'Failed to fetch boards')
-                toast.error((error as Error).message || 'Failed to fetch boards')
             }
         }
 

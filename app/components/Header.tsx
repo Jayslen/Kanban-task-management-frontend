@@ -19,6 +19,7 @@ export function Header() {
     handleDeleteBoardClick,
     handleEditBoardClick,
     deleteBoard,
+    handleLogout,
   } = useHeader()
 
   return (
@@ -35,13 +36,20 @@ export function Header() {
         </div>
 
         <nav className="flex items-center gap-6">
-          {!isLoggedIn && (
+          {!isLoggedIn ? (
             <Link
               to="/login"
               className="secondary-btn grid w-28 place-items-center"
             >
               Login{' '}
             </Link>
+          ) : (
+            <button
+              className="secondary-btn grid w-28 place-items-center"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
           )}
           <button
             className="primary-btn-l heading-m flex w-12 items-center justify-center gap-2 text-white md:w-40"

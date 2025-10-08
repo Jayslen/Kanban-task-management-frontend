@@ -31,6 +31,17 @@ export function useHeader() {
         }
         setIsEditPopupOpen((prev) => !prev)
     }
+    const handleLogout = async () => {
+        try {
+            await APIMethods.LogoutUser()
+            navigate(0)
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                toast.error(error.message || 'Something went wrong')
+            }
+        }
+    }
 
     const deleteBoard = async () => {
         try {
@@ -58,5 +69,7 @@ export function useHeader() {
         handleAddNewTaskClick,
         handleDeleteBoardClick,
         handleEditBoardClick,
+        handleLogout
     }
+
 }
