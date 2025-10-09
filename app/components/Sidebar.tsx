@@ -9,6 +9,7 @@ import { NewBoardPopup } from './board/NewBoardPopup'
 import { useBoards } from '~/context/UseBoards'
 import toast from 'react-hot-toast'
 import { BoardAnchor } from './board/BoardAnchor'
+import { Logos } from './Logos'
 
 export function SideBar(props: { toggleSideBar: () => void }) {
   const { toggleSideBar } = props
@@ -26,16 +27,7 @@ export function SideBar(props: { toggleSideBar: () => void }) {
       <aside className="dark:bg-dark-grey hidden h-screen w-[300px] grid-rows-[auto_1fr_auto] border-r-[1px] border-[#E4EBFA] bg-white [grid-area:sidebar] md:grid dark:border-0">
         <header className="mb-[54px] px-6 pt-6">
           <NavLink to="/">
-            <img
-              src={LightModeLogo}
-              alt="Logo kaban"
-              className="hidden dark:block"
-            />
-            <img
-              src={DarkModeLogo}
-              alt="Logo kaban"
-              className="block dark:hidden"
-            />
+            <Logos />
           </NavLink>
         </header>
 

@@ -14,12 +14,22 @@ const HEADERS_OPTIONS = (input?: Partial<RequestInit>): RequestInit => {
 }
 
 export class APIMethods {
+    static async RegisterUser(requestBody: { username: string, password: string }): Promise<string | undefined> {
+        const response = await fetch(`${API_URL}register`, HEADERS_OPTIONS({ method: Method.POST, body: JSON.stringify(requestBody) }))
+        if (!response.ok) {
+            const responseError = await response.json()
+            throw new Error(responseError.message || 'Registration failed')
+        }
+        const user = await response.json() as { username: string }
+        return user.username
+    }
+
     static async LoginUser(requestBody: { username: string, password: string }): Promise<string | undefined> {
         const response = await fetch(`${API_URL}login`, HEADERS_OPTIONS({ method: Method.POST, body: JSON.stringify(requestBody) }))
 
         if (!response.ok) {
             const responseError = await response.json()
-            throw new Error(responseError.message)
+            throw new Error(responseError.message || 'Login failed')
         }
 
         const user = await response.json() as { username: string }

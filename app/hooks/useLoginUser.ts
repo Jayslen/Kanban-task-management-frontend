@@ -1,9 +1,10 @@
-import type { FormEvent } from "react"
+import { useState, type FormEvent } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router"
 import { APIMethods } from "~/api/apiClient"
 
 export function useLoginUser() {
+    const [isLoggingIn, setIsLoggingIn] = useState<boolean>(true)
     const navigate = useNavigate()
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -24,5 +25,29 @@ export function useLoginUser() {
             }
         )
     }
-    return { handleLogin }
+
+    const handleRegister = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const { username, password } = Object.fromEntries(new FormData(e.currentTarget))
+        toast.promise(
+            APIMethods.RegisterUser({ username: username as string, password: password as string }),
+            {
+                loading: 'Creating your account...',
+                success: (registeredUsername) => {
+                    navigate('/')
+                    window.localStorage.setItem('user', JSON.stringify(registeredUsername))
+                    return `Welcome aboard, ${registeredUsername}`
+                },
+                error: (err) => {
+                    return `${err.message === 'Failed to fetch' ? 'Network error' : err.message}`
+                },
+            }
+        )
+    }
+
+    const togleLoginRegister = () => {
+        setIsLoggingIn((prev) => !prev)
+    }
+
+    return { handleLogin, handleRegister, togleLoginRegister, isLoggingIn }
 }
