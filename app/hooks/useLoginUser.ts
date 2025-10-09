@@ -19,7 +19,7 @@ export function useLoginUser() {
                     return `Welcome back, ${username}`
                 },
                 error: (err) => {
-                    return `${err.message || 'Login failed'}`
+                    return `${err.message === 'Failed to fetch' ? 'Network error' : err.message}`
                 },
             }
         )

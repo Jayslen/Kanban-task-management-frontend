@@ -1,43 +1,23 @@
 import { useEffect, useState } from "react"
 
 export function useToggleTheme() {
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(true)
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+
     const handleToggleTheme = () => {
-        if (isDarkMode) {
-            document.documentElement.classList.remove('dark')
-            localStorage.setItem('theme', 'light')
-            setIsDarkMode(false)
-        } else {
-            document.documentElement.classList.add('dark')
-            localStorage.setItem('theme', 'dark')
-            setIsDarkMode(true)
-        }
+        const newTheme = isDarkMode ? 'light' : 'dark'
+        document.documentElement.classList.toggle('dark', newTheme === 'dark')
+        window.localStorage.setItem('theme', newTheme)
+        setIsDarkMode(!isDarkMode)
     }
 
     useEffect(() => {
-        const userTheme = window.localStorage.getItem('theme')
+        const userTheme = localStorage.getItem('theme')
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        const activeTheme = userTheme || (systemPrefersDark ? 'dark' : 'light')
 
-        if (!userTheme) {
-            const systemPreference = window.matchMedia(
-                '(prefers-color-scheme: dark)'
-            ).matches
-            systemPreference
-                ? document.documentElement.classList.add('dark')
-                : document.documentElement.classList.remove('dark')
-        }
-
-        if (userTheme === 'dark') {
-            document.documentElement.classList.add('dark')
-            setIsDarkMode(true)
-            return
-        }
-
-        if (userTheme === 'light') {
-            document.documentElement.classList.remove('dark')
-            setIsDarkMode(false)
-            return
-        }
-    })
+        document.documentElement.classList.toggle('dark', activeTheme === 'dark')
+        setIsDarkMode(activeTheme === 'dark')
+    }, [])
 
     return { isDarkMode, handleToggleTheme }
 }
