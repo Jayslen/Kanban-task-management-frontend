@@ -8,7 +8,7 @@ enum Method {
     PATCH = 'PATCH'
 }
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/';
 const HEADERS_OPTIONS = (input?: Partial<RequestInit>): RequestInit => {
     return { method: input?.method || Method.GET, headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: input?.body }
 }
