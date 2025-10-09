@@ -1,5 +1,13 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
 import { Toaster } from 'react-hot-toast'
+import type { Route } from '../+types/root'
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: 'Kaban Task Management' },
+    { name: 'description', content: 'A simple task management app' },
+  ]
+}
 
 export default function Layout() {
   return (

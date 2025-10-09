@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { redirect } from 'react-router'
-import toast from 'react-hot-toast'
 import { BoardTask } from '~/components/task/BoardTask'
 import { TaskPopup } from '~/components/task/ViewTaskPopup'
 import type { Task, Board } from '~/types/global'

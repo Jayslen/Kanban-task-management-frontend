@@ -1,87 +1,44 @@
-# Welcome to React Router!
+# About project
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Hi. This is the frontend for the Kaban task management application from [Frontend Mentor](https://www.frontendmentor.io/challenges/kanban-task-management-web-app-wgQLt-HlbB). The project is built using React, and it uses the [node backend](https://github.com/Jayslen/Kanban-task-management-backend) build with Express.js saving the data in a MySQL database.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+It has a extra feature that i added, which allow the user to register and login, so each user can have their own boards.
+
+<div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center;">
+    <img src="./public/dark-mode-home.png" alt="Project preview" />
+    <img src="./public/light-mode-home.png" alt="Project preview" />
+</div>
 
 ## Features
+- CRUD operations for boards, columns and tasks.
+- Light and dark mode.
+- Local mode to save data in the browser's local storage.
+- Responsive design for mobile, tablet and desktop.
+- Authentication system with registration and login.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Technologies used
+- TypeScript
+- React
+- React Router
+- Tailwind CSS
+- Zustand
+- just-debounce-it
+- react-hot-toast
 
-## Getting Started
-
-### Installation
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+## How to run the project
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Jayslen/Kanban-task-management-frontend
+   ```
+2. Navigate to the project directory:
+   ```bash
+    cd Kanban-task-management-frontend
+    ```
+3. Install the dependencies:
+    ```bash
+    npm install
+    ```
+4. Start the development server:
+    ```bash
+    npm start
+    ```
