@@ -1,4 +1,4 @@
-import { LocalAPIMethods } from './LocalAPIMethods'
-import { RemoteAPIMethods } from './remoteApiMethods'
+import { LocalAPIMethods } from './localAPIMethods'
+import { RemoteAPIMethods } from './remoteAPIMethods'
 
 export { LocalAPIMethods as APIMethods };
