@@ -18,6 +18,7 @@ export function Popup(props: {
       onClick={handleBackdropClick}
     >
       <section
+        role="dialog"
         className="dark:bg-dark-grey custom-scrollbar mx-auto flex w-[90%] flex-col gap-6 overflow-auto rounded-md bg-white p-8 md:max-h-[600px] md:min-h-[520px] md:w-[480px]"
         style={{ minHeight: height ?? '520px' }}
         onClick={handleSectionClick}

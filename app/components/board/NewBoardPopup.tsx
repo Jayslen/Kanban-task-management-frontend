@@ -53,6 +53,7 @@ export function NewBoardPopup(props: { closePopup: () => void }) {
         />
         <div
           className="custom-scrollbar flex h-full grow flex-col gap-2"
+          data-testid="columns-container"
           id={inputContainerId}
         >
           <h3 className="heading-m text-medium-grey dark:text-white">

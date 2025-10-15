@@ -3,9 +3,11 @@ import { useEffect, useId, useRef } from 'react'
 export function OptionsMenu({
   handleDeleteBoardClick,
   handleEditBoardClick,
+  isBoard = true,
 }: {
   handleDeleteBoardClick: () => void
   handleEditBoardClick: () => void
+  isBoard?: boolean
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const inputId = useId()
@@ -46,6 +48,7 @@ export function OptionsMenu({
         ref={inputRef}
         type="checkbox"
         id={inputId}
+        name="dropdown"
         className="peer"
         hidden
       />
@@ -54,13 +57,13 @@ export function OptionsMenu({
           onClick={handleEditBoardClick}
           className="text-medium-grey hover:text-main-purple cursor-pointer"
         >
-          Edit board
+          Edit {isBoard ? 'board' : 'task'}
         </span>
         <span
           onClick={handleDeleteBoardClick}
           className="text-red hover:text-red/60 cursor-pointer"
         >
-          Delete board
+          Delete {isBoard ? 'board' : 'task'}
         </span>
       </div>
     </>

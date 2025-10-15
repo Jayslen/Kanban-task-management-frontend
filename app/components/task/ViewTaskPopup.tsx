@@ -39,6 +39,7 @@ export function TaskPopup({
           <OptionsMenu
             handleDeleteBoardClick={handleDeleteBoardClick}
             handleEditBoardClick={handleEditBoardClick}
+            isBoard={false}
           />
         </header>
         <p className="typo-body-m text-medium-grey dark:text-white">

@@ -31,7 +31,7 @@ export function SideBar(props: { toggleSideBar: () => void }) {
           </NavLink>
         </header>
 
-        <nav className="flex flex-col gap-4">
+        <nav className="flex h-full flex-col gap-4 overflow-y-auto">
           <h3 className="heading-s text-medium-grey px-7 uppercase">
             All boards ({boards?.length})
           </h3>
