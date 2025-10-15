@@ -4,6 +4,8 @@ Hi. This is the frontend for the Kaban task management application from [Fronten
 
 It has a extra feature that i added, which allow the user to register and login, so each user can have their own boards.
 
+The project has playwright tests. Whic tests the login mechanism and some board actions like: creating, editing and deleting boards and tasks.
+
 <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center;">
     <img src="./public/dark-mode-home.png" alt="Project preview" />
     <img src="./public/light-mode-home.png" alt="Project preview" />
@@ -15,6 +17,7 @@ It has a extra feature that i added, which allow the user to register and login,
 - Local mode to save data in the browser's local storage.
 - Responsive design for mobile, tablet and desktop.
 - Authentication system with registration and login.
+- Playwright tests for login and board management.
 
 ## Technologies used
 - TypeScript
@@ -24,6 +27,7 @@ It has a extra feature that i added, which allow the user to register and login,
 - Zustand
 - just-debounce-it
 - react-hot-toast
+- Playwright (for testing)
 
 ## How to run the project
 1. Clone the repository:
@@ -42,3 +46,9 @@ It has a extra feature that i added, which allow the user to register and login,
     ```bash
     npm start
     ```
+
+### Scripts
+- `npm run dev`: Starts the development server.
+- `npm test`: Runs the Playwright tests.
+- `npm run test:ui`: Opens the Playwright test runner UI.
+- `npm run test:headed`: Runs the Playwright tests in headed mode.
