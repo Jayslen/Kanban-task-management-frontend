@@ -31,7 +31,7 @@ export function Header() {
             alt="App logo for mobile"
             className="sm:hidden"
           />
-          <h1 className="heading-xl">Platform Launch</h1>
+          <h1 className="heading-xl">{board?.name}</h1>
           <DropdownMenuMobile boards={boards || []} />
         </div>
 
